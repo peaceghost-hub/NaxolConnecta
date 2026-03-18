@@ -220,10 +220,88 @@
             box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
         }
 
+        /* Nav search bar */
+        .nav-search {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-search input {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            width: 200px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .nav-search input:focus {
+            border-color: var(--accent-cyan);
+            background: rgba(255,255,255,0.12);
+            width: 260px;
+        }
+
+        .nav-search input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Our Promise nav link - hidden on desktop */
+        .nav-promise-item {
+            display: none;
+        }
+
+        /* Promise slide-down panel */
+        .promise-panel {
+            display: none;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .promise-panel.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .promise-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.8rem;
+        }
+
+        .promise-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .promise-badge {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #ffffff;
+            background: linear-gradient(135deg, #4dd9ff 0%, #6dc8ff 100%);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+        }
+
         @media (max-width: 768px) {
             nav {
                 flex-wrap: wrap;
-                gap: 1rem;
+                gap: 0.8rem;
             }
 
             .nav-links {
@@ -235,6 +313,43 @@
 
             .nav-logo {
                 font-size: 1.2rem;
+            }
+
+            /* Show Our Promise link on mobile */
+            .nav-promise-item {
+                display: list-item;
+            }
+
+            /* Hide hero subtitle & slogans on mobile */
+            .hero-subtitle,
+            .hero-slogans {
+                display: none;
+            }
+
+            /* Search bar responsive */
+            .nav-search {
+                order: 2;
+            }
+
+            .nav-search input {
+                width: 140px;
+                font-size: 0.8rem;
+                padding: 0.45rem 0.8rem;
+            }
+
+            .nav-search input:focus {
+                width: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-search input {
+                width: 110px;
+                font-size: 0.75rem;
+            }
+
+            .nav-search input:focus {
+                width: 140px;
             }
         }
 
@@ -1190,9 +1305,22 @@
             <li><a href="#products">Products</a></li>
             <li><a href="#deals">Deals</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li class="nav-promise-item"><a href="#" onclick="togglePromisePanel(event)">Our Promise ✨</a></li>
         </ul>
+        <div class="nav-search">
+            <input type="text" id="searchInput" placeholder="🔍 Search products..." oninput="searchProducts(this.value)">
+        </div>
         <a href="#" class="whatsapp-float" id="globalWhatsApp" title="Chat on WhatsApp">💬</a>
     </nav>
+
+    <!-- Promise panel (mobile slogans) -->
+    <div class="promise-panel" id="promisePanel">
+        <p class="promise-subtitle">Affordable Prices. Top Brands. Backed by Warranty.</p>
+        <div class="promise-badges">
+            <span class="promise-badge">⭐ BEST DEALS ON QUALITY PRODUCTS</span>
+            <span class="promise-badge">🛍️ SHOP SMART. SAVE BIG.</span>
+        </div>
+    </div>
 
     <!-- =============================================
          HERO SECTION
@@ -2347,24 +2475,43 @@
 
             if (isMobile) {
                 // MOBILE: long press = select, short tap = open image
+                // Track touch position to distinguish scroll from tap
+                let touchStartX = 0;
+                let touchStartY = 0;
+                let touchMoved = false;
+
                 card.addEventListener('touchstart', (e) => {
                     longPressed = false;
+                    touchMoved = false;
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
                     longPressTimer = setTimeout(() => {
-                        longPressed = true;
-                        toggleProductSelection(product);
-                        // Haptic feedback if available
-                        if (navigator.vibrate) navigator.vibrate(30);
-                    }, 500);
+                        if (!touchMoved) {
+                            longPressed = true;
+                            toggleProductSelection(product);
+                            if (navigator.vibrate) navigator.vibrate(30);
+                        }
+                    }, 600);
                 }, { passive: true });
+
+                card.addEventListener('touchmove', (e) => {
+                    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+                    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+                    // If finger moved more than 10px, it's a scroll not a tap
+                    if (dx > 10 || dy > 10) {
+                        touchMoved = true;
+                        clearTimeout(longPressTimer);
+                    }
+                }, { passive: true });
+
                 card.addEventListener('touchend', (e) => {
                     clearTimeout(longPressTimer);
-                    if (!longPressed) {
+                    // Only open lightbox on a genuine tap (no scroll, no long press)
+                    if (!longPressed && !touchMoved) {
+                        e.preventDefault();
                         openLightbox(product);
                     }
                 });
-                card.addEventListener('touchmove', () => {
-                    clearTimeout(longPressTimer);
-                }, { passive: true });
             } else {
                 // PC: single click = select, double click = open image
                 card.addEventListener('click', (e) => {
@@ -2675,6 +2822,79 @@
             }
         }
 
+        // =============================================
+        // OUR PROMISE PANEL TOGGLE (MOBILE)
+        // =============================================
+        function togglePromisePanel(e) {
+            e.preventDefault();
+            const panel = document.getElementById('promisePanel');
+            panel.classList.toggle('active');
+        }
+
+        // Close promise panel when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('promisePanel');
+            if (panel && panel.classList.contains('active')) {
+                if (!panel.contains(e.target) && !e.target.closest('.nav-promise-item')) {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+
+        // =============================================
+        // SEARCH FUNCTIONALITY
+        // =============================================
+        let searchQuery = '';
+
+        function searchProducts(query) {
+            searchQuery = query.trim().toLowerCase();
+            renderProducts();
+            // Scroll to products if user is typing
+            if (searchQuery.length > 0) {
+                smoothScroll('#products');
+            }
+        }
+
+        // Patch renderProducts to incorporate search
+        const _originalRenderProducts = renderProducts;
+        renderProducts = function() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            let filtered = products;
+
+            // Search filter
+            if (searchQuery) {
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(searchQuery) ||
+                    p.brand.toLowerCase().includes(searchQuery) ||
+                    p.category.toLowerCase().includes(searchQuery) ||
+                    p.description.toLowerCase().includes(searchQuery) ||
+                    String(p.price).includes(searchQuery)
+                );
+            }
+
+            // Category filter
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(p => p.category === currentFilter);
+            }
+
+            // Brand filter
+            if (currentBrand !== 'all') {
+                filtered = filtered.filter(p => p.brand === currentBrand);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-secondary);font-size:1.1rem;">No products found matching your search.</div>';
+                return;
+            }
+
+            filtered.forEach(product => {
+                const card = createProductCard(product);
+                grid.appendChild(card);
+            });
+        };
+
         function setupEventListeners() {
             // Smooth scroll for nav links
             document.querySelectorAll('.nav-links a').forEach(link => {
@@ -2685,6 +2905,16 @@
                         smoothScroll(href);
                     }
                 });
+            });
+
+            // Clear search when pressing Escape
+            document.getElementById('searchInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    searchQuery = '';
+                    renderProducts();
+                    this.blur();
+                }
             });
         }
     </script>
