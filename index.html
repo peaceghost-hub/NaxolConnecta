@@ -228,7 +228,7 @@
             overflow: hidden;
         }
 
-        /* Hero Slideshow Background */
+        /* Hero Slideshow Background — LOUD & CLEAR product showcase */
         .hero-slideshow {
             position: absolute;
             top: 0;
@@ -246,6 +246,10 @@
             height: 100%;
             opacity: 0;
             transition: opacity 3s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
         }
 
         .hero-slide.active {
@@ -253,15 +257,111 @@
         }
 
         .hero-slide img {
+            width: 80%;
+            max-width: 600px;
+            height: 80%;
+            object-fit: contain;
+            filter: brightness(1) drop-shadow(0 0 40px rgba(0,229,255,0.3));
+        }
+
+        /* Dark overlay so text stays readable over bright images */
+        .hero-slideshow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            filter: brightness(0.25) blur(2px);
+            background: linear-gradient(
+                to bottom,
+                rgba(13,13,26,0.70) 0%,
+                rgba(13,13,26,0.40) 35%,
+                rgba(13,13,26,0.40) 65%,
+                rgba(13,13,26,0.75) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
         }
 
         .hero-content, .hero-slogans, .hero-buttons, .brand-strip {
             position: relative;
             z-index: 2;
+        }
+
+        /* Clickable brand pills in hero */
+        .brand-pill {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .brand-pill:hover, .brand-pill.active {
+            background: var(--accent-cyan);
+            color: #000;
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(0,229,255,0.4);
+        }
+
+        /* =============================================
+           IMAGE LIGHTBOX MODAL
+           ============================================= */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 60px rgba(0,229,255,0.3);
+        }
+
+        .lightbox-caption {
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .lightbox-price {
+            color: var(--accent-cyan);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 3001;
+            transition: color 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent-cyan);
         }
 
         @keyframes gradient {
@@ -334,6 +434,7 @@
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
+            user-select: none;
         }
 
         @media (max-width: 768px) {
@@ -921,18 +1022,18 @@
             </div>
         </div>
         <div class="brand-strip">
-            <span class="brand-pill">SONY</span>
-            <span class="brand-pill">SAMSUNG</span>
-            <span class="brand-pill">HISENSE</span>
-            <span class="brand-pill">SKYWORTH</span>
-            <span class="brand-pill">LG</span>
-            <span class="brand-pill">KENWOOD</span>
-            <span class="brand-pill">RUSSELL HOBBS</span>
-            <span class="brand-pill">DEFY</span>
-            <span class="brand-pill">JBL</span>
-            <span class="brand-pill">HUAWEI</span>
-            <span class="brand-pill">VOLKANO</span>
-            <span class="brand-pill">BENNETT READ</span>
+            <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
+            <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
+            <span class="brand-pill" data-brand="Hisense" onclick="filterByBrand('Hisense', this)">HISENSE</span>
+            <span class="brand-pill" data-brand="Skyworth" onclick="filterByBrand('Skyworth', this)">SKYWORTH</span>
+            <span class="brand-pill" data-brand="LG" onclick="filterByBrand('LG', this)">LG</span>
+            <span class="brand-pill" data-brand="Kenwood" onclick="filterByBrand('Kenwood', this)">KENWOOD</span>
+            <span class="brand-pill" data-brand="Russell Hobbs" onclick="filterByBrand('Russell Hobbs', this)">RUSSELL HOBBS</span>
+            <span class="brand-pill" data-brand="Defy" onclick="filterByBrand('Defy', this)">DEFY</span>
+            <span class="brand-pill" data-brand="JBL" onclick="filterByBrand('JBL', this)">JBL</span>
+            <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
+            <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
+            <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
         </div>
     </section>
 
@@ -951,6 +1052,10 @@
             <button class="filter-btn" data-filter="iron">🧺 Irons</button>
             <button class="filter-btn" data-filter="watch">⌚ Smart Watches</button>
             <button class="filter-btn" data-filter="accessories">💍 Accessories & Jewellery</button>
+        </div>
+        <div class="category-filter" id="brandFilter" style="margin-top: -1rem;">
+            <span style="color:var(--text-secondary);font-weight:600;font-size:0.9rem;">Filter by Brand:</span>
+            <button class="filter-btn brand-filter-btn active" data-brand="all">All Brands</button>
         </div>
 
         <!-- =============================================
@@ -1094,6 +1199,16 @@
             </div>
         </div>
     </footer>
+
+    <!-- =============================================
+         IMAGE LIGHTBOX
+         ============================================= -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">×</button>
+        <img id="lightboxImage" src="" alt="Product Image">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+        <div class="lightbox-price" id="lightboxPrice"></div>
+    </div>
 
     <script>
         // =============================================
@@ -1886,6 +2001,7 @@
         // =============================================
         let selectedProducts = new Set();
         let currentFilter = "all";
+        let currentBrand = "all";
 
         // =============================================
         // DOM INITIALIZATION
@@ -1893,6 +2009,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             renderProducts();
             setupFilterButtons();
+            setupBrandFilter();
             setupWhatsAppLinks();
             setupEventListeners();
             initHeroSlideshow();
@@ -1934,7 +2051,9 @@
             grid.innerHTML = '';
 
             products.forEach(product => {
-                if (currentFilter === 'all' || product.category === currentFilter) {
+                const matchesCategory = (currentFilter === 'all' || product.category === currentFilter);
+                const matchesBrand = (currentBrand === 'all' || product.brand === currentBrand);
+                if (matchesCategory && matchesBrand) {
                     const card = createProductCard(product);
                     grid.appendChild(card);
                 }
@@ -1973,7 +2092,48 @@
                 </div>
             `;
 
-            card.addEventListener('click', () => toggleProductSelection(product));
+            // ── Interaction: PC double-click=lightbox, single-click=select
+            //    Mobile: short tap=lightbox, long press=select ──
+            let clickTimer = null;
+            let longPressTimer = null;
+            let longPressed = false;
+            const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+            if (isMobile) {
+                // MOBILE: long press = select, short tap = open image
+                card.addEventListener('touchstart', (e) => {
+                    longPressed = false;
+                    longPressTimer = setTimeout(() => {
+                        longPressed = true;
+                        toggleProductSelection(product);
+                        // Haptic feedback if available
+                        if (navigator.vibrate) navigator.vibrate(30);
+                    }, 500);
+                }, { passive: true });
+                card.addEventListener('touchend', (e) => {
+                    clearTimeout(longPressTimer);
+                    if (!longPressed) {
+                        openLightbox(product);
+                    }
+                });
+                card.addEventListener('touchmove', () => {
+                    clearTimeout(longPressTimer);
+                }, { passive: true });
+            } else {
+                // PC: single click = select, double click = open image
+                card.addEventListener('click', (e) => {
+                    if (clickTimer) {
+                        clearTimeout(clickTimer);
+                        clickTimer = null;
+                        openLightbox(product);
+                    } else {
+                        clickTimer = setTimeout(() => {
+                            clickTimer = null;
+                            toggleProductSelection(product);
+                        }, 300);
+                    }
+                });
+            }
             return card;
         }
 
@@ -2027,14 +2187,85 @@
         // CATEGORY FILTER
         // =============================================
         function setupFilterButtons() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
+            document.querySelectorAll('.filter-btn:not(.brand-filter-btn)').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.filter-btn:not(.brand-filter-btn)').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentFilter = this.dataset.filter;
                     renderProducts();
                 });
             });
+        }
+
+        // =============================================
+        // BRAND FILTER
+        // =============================================
+        function setupBrandFilter() {
+            // Build unique brand buttons dynamically
+            const brandContainer = document.getElementById('brandFilter');
+            const brands = [...new Set(products.map(p => p.brand))].sort();
+            brands.forEach(brand => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn brand-filter-btn';
+                btn.dataset.brand = brand;
+                btn.textContent = brand;
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.brand-filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentBrand = this.dataset.brand;
+                    // Also reset hero brand pill highlights
+                    document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
+                    const heroPill = document.querySelector(`.brand-pill[data-brand="${brand}"]`);
+                    if (heroPill) heroPill.classList.add('active');
+                    renderProducts();
+                });
+                brandContainer.appendChild(btn);
+            });
+
+            // "All Brands" button already in HTML
+            document.querySelector('.brand-filter-btn[data-brand="all"]').addEventListener('click', function() {
+                document.querySelectorAll('.brand-filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentBrand = 'all';
+                document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
+                renderProducts();
+            });
+        }
+
+        // Called when hero brand pills are clicked
+        function filterByBrand(brand, el) {
+            currentBrand = brand;
+            currentFilter = 'all';
+            // Reset category filter UI
+            document.querySelectorAll('.filter-btn:not(.brand-filter-btn)').forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+            // Update brand filter bar UI
+            document.querySelectorAll('.brand-filter-btn').forEach(b => b.classList.remove('active'));
+            const brandBtn = document.querySelector(`.brand-filter-btn[data-brand="${brand}"]`);
+            if (brandBtn) brandBtn.classList.add('active');
+            // Update hero pill highlights
+            document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+            renderProducts();
+            smoothScroll('#products');
+        }
+
+        // =============================================
+        // IMAGE LIGHTBOX
+        // =============================================
+        function openLightbox(product) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightboxImage').src = product.image;
+            document.getElementById('lightboxCaption').textContent = product.name;
+            document.getElementById('lightboxPrice').textContent = '$' + product.price;
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e) {
+            if (e) e.stopPropagation();
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         // =============================================
