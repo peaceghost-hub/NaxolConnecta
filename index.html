@@ -228,14 +228,48 @@
             overflow: hidden;
         }
 
-        /* Hero Slideshow Background — LOUD & CLEAR product showcase */
-        .hero-slideshow {
+        /* ── LAYER 1: Feint full-cover background (dim, blurred, atmospheric) ── */
+        .hero-bg-slideshow {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+
+        .hero-bg-slide.active {
+            opacity: 1;
+        }
+
+        .hero-bg-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.30) blur(6px) saturate(1.4);
+            transform: scale(1.05); /* eliminates blur edge gaps */
+        }
+
+        /* ── LAYER 2: Clear centered product image (sharp, beaming) ── */
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .hero-slide {
@@ -249,7 +283,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
         }
 
         .hero-slide.active {
@@ -257,14 +290,14 @@
         }
 
         .hero-slide img {
-            width: 80%;
-            max-width: 600px;
-            height: 80%;
+            width: 55%;
+            max-width: 480px;
+            height: 70%;
             object-fit: contain;
-            filter: brightness(1) drop-shadow(0 0 40px rgba(0,229,255,0.3));
+            filter: brightness(1.05) drop-shadow(0 0 50px rgba(0,229,255,0.35)) drop-shadow(0 0 120px rgba(0,229,255,0.15));
         }
 
-        /* Dark overlay so text stays readable over bright images */
+        /* ── Overlay gradient between images and text for readability ── */
         .hero-slideshow::after {
             content: '';
             position: absolute;
@@ -274,18 +307,35 @@
             height: 100%;
             background: linear-gradient(
                 to bottom,
-                rgba(13,13,26,0.70) 0%,
-                rgba(13,13,26,0.40) 35%,
-                rgba(13,13,26,0.40) 65%,
-                rgba(13,13,26,0.75) 100%
+                rgba(13,13,26,0.78) 0%,
+                rgba(13,13,26,0.30) 30%,
+                rgba(13,13,26,0.20) 50%,
+                rgba(13,13,26,0.30) 70%,
+                rgba(13,13,26,0.80) 100%
             );
-            z-index: 1;
+            z-index: 2;
             pointer-events: none;
         }
 
         .hero-content, .hero-slogans, .hero-buttons, .brand-strip {
             position: relative;
-            z-index: 2;
+            z-index: 3;
+        }
+
+        /* ── Enhanced text visibility on dynamic backgrounds ── */
+        .hero-content h1 {
+            text-shadow: 0 2px 30px rgba(0,0,0,0.7), 0 0 60px rgba(0,229,255,0.15);
+        }
+
+        .hero-content p {
+            color: #d8d8d8;
+            text-shadow: 0 1px 12px rgba(0,0,0,0.8);
+        }
+
+        .slogan-badge {
+            text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            background: rgba(0, 229, 255, 0.12);
         }
 
         /* Clickable brand pills in hero */
@@ -1003,7 +1053,9 @@
          HERO SECTION
          ============================================= -->
     <section class="hero" id="hero">
-        <!-- Hero Slideshow Background -->
+        <!-- Layer 1: Feint full-cover atmospheric background -->
+        <div class="hero-bg-slideshow" id="heroBgSlideshow"></div>
+        <!-- Layer 2: Clear centered product showcase -->
         <div class="hero-slideshow" id="heroSlideshow"></div>
         <div class="hero-content">
             <h1>Connecting People to Quality Gadgets</h1>
@@ -2016,30 +2068,47 @@
         });
 
         // =============================================
-        // HERO SLIDESHOW — cycles product images slowly
+        // HERO SLIDESHOW — dual layer: feint BG + clear foreground
         // =============================================
         function initHeroSlideshow() {
-            const container = document.getElementById('heroSlideshow');
-            // Pick a selection of hero-worthy product images (TVs, bundles, audio, big items)
+            const bgContainer = document.getElementById('heroBgSlideshow');
+            const fgContainer = document.getElementById('heroSlideshow');
+
+            // Pick hero-worthy product images
             const heroImages = products
                 .filter(p => ['televisions','bundle','audio','airfryer','microwave','watch'].includes(p.category))
                 .map(p => p.image);
-            // Shuffle and take up to 15 images
             const shuffled = heroImages.sort(() => 0.5 - Math.random()).slice(0, 15);
+
+            // Build both layers with the same images in sync
             shuffled.forEach((src, i) => {
-                const slide = document.createElement('div');
-                slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
-                slide.innerHTML = '<img src="' + src + '" alt="Naxol Connecta Product">';
-                container.appendChild(slide);
+                const activeClass = (i === 0) ? ' active' : '';
+
+                // Layer 1 — feint full-cover background
+                const bgSlide = document.createElement('div');
+                bgSlide.className = 'hero-bg-slide' + activeClass;
+                bgSlide.innerHTML = '<img src="' + src + '" alt="">';
+                bgContainer.appendChild(bgSlide);
+
+                // Layer 2 — clear centered product
+                const fgSlide = document.createElement('div');
+                fgSlide.className = 'hero-slide' + activeClass;
+                fgSlide.innerHTML = '<img src="' + src + '" alt="Naxol Connecta Product">';
+                fgContainer.appendChild(fgSlide);
             });
+
+            // Sync both layers on the same timer
             let current = 0;
-            const slides = container.querySelectorAll('.hero-slide');
-            if (slides.length > 1) {
+            const bgSlides = bgContainer.querySelectorAll('.hero-bg-slide');
+            const fgSlides = fgContainer.querySelectorAll('.hero-slide');
+            if (bgSlides.length > 1) {
                 setInterval(() => {
-                    slides[current].classList.remove('active');
-                    current = (current + 1) % slides.length;
-                    slides[current].classList.add('active');
-                }, 60000); // Change every 60 seconds (1 minute)
+                    bgSlides[current].classList.remove('active');
+                    fgSlides[current].classList.remove('active');
+                    current = (current + 1) % bgSlides.length;
+                    bgSlides[current].classList.add('active');
+                    fgSlides[current].classList.add('active');
+                }, 60000); // Every 60 seconds
             }
         }
 
