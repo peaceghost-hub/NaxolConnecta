@@ -330,11 +330,6 @@
                 display: none !important;
             }
 
-            /* Show the mobile brand toggle button */
-            .brand-toggle-btn {
-                display: inline-flex !important;
-            }
-
             /* Search bar responsive */
             .nav-search {
                 order: 2;
@@ -507,11 +502,19 @@
 
         .brand-strip {
             padding-top: 0;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            max-height: 300px;
+            overflow: hidden;
         }
 
-        /* Brand toggle button - only visible on mobile */
+        .brand-strip.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        /* Brand toggle button - visible on all screens */
         .brand-toggle-btn {
-            display: none;
+            display: inline-flex;
             align-items: center;
             gap: 0.4rem;
             font-family: 'Poppins', sans-serif;
@@ -756,9 +759,11 @@
             }
 
             .hero-buttons {
-                flex-direction: column;
+                flex-direction: row;
+                flex-wrap: wrap;
                 align-items: center;
-                gap: 0.6rem;
+                justify-content: center;
+                gap: 0.5rem;
             }
 
             .btn {
@@ -1438,8 +1443,8 @@
             <a href="#" class="btn btn-success" id="heroWhatsApp">
                 💬 Chat
             </a>
+            <button class="brand-toggle-btn" onclick="toggleBrandStrip()">🏷️ Brands</button>
         </div>
-        <button class="brand-toggle-btn" onclick="toggleBrandStrip()">🏷️ Brands</button>
         <div class="brand-strip" id="brandStrip">
             <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
             <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
@@ -2991,8 +2996,14 @@
         // BRAND STRIP TOGGLE (MOBILE)
         // =============================================
         function toggleBrandStrip() {
-            const panel = document.getElementById('mobileBrandPanel');
-            panel.classList.toggle('active');
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                const panel = document.getElementById('mobileBrandPanel');
+                panel.classList.toggle('active');
+            } else {
+                const strip = document.getElementById('brandStrip');
+                strip.classList.toggle('collapsed');
+            }
             // Close promise panel if open
             document.getElementById('promisePanel').classList.remove('active');
         }
