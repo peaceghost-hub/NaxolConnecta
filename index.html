@@ -250,7 +250,7 @@
             min-height: 600px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-evenly;
             align-items: center;
             gap: 0;
             overflow: hidden;
@@ -362,18 +362,9 @@
             pointer-events: none;
         }
 
-        .hero-content, .hero-slogans, .hero-buttons, .hero-bottom, .brand-strip {
+        .hero-title, .hero-subtitle, .hero-slogans, .hero-buttons, .brand-strip {
             position: relative;
             z-index: 2;
-        }
-
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            gap: 0;
         }
 
         .hero-slogans {
@@ -381,16 +372,6 @@
             flex-wrap: wrap;
             gap: 0.6rem;
             justify-content: center;
-        }
-
-        .hero-bottom {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.6rem;
-            margin-top: auto;
         }
 
         .hero-buttons {
@@ -404,20 +385,20 @@
             padding-top: 0;
         }
 
-        /* ── BOLD WHITE TEXT WITH BLUE BACKGROUNDS ── */
-        .hero-content h1 {
+        /* ── BOLD WHITE TEXT WITH LIGHT BLUE BACKGROUNDS ── */
+        .hero-title {
             display: inline-block;
             font-family: 'Poppins', sans-serif;
             font-weight: 900;
             font-size: 3.5rem;
             line-height: 1.3;
             color: #ffffff;
-            background: linear-gradient(135deg, #0066ff 0%, #0088ff 100%);
+            background: linear-gradient(135deg, #5ba3ff 0%, #7ab8ff 100%);
             padding: 1.2rem 2.8rem;
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 102, 255, 0.5), 0 0 0 3px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(91, 163, 255, 0.4);
             letter-spacing: -0.01em;
-            margin-bottom: 1.2rem;
+            margin: 0;
             animation: fadeInUp 0.8s ease-out;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -434,17 +415,17 @@
             }
         }
 
-        .hero-content p {
+        .hero-subtitle {
             display: inline-block;
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
             font-size: 1.5rem;
             color: #ffffff;
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0099ff 100%);
+            background: linear-gradient(135deg, #4dd9ff 0%, #6dc8ff 100%);
             padding: 0.9rem 2.2rem;
             border-radius: 12px;
-            box-shadow: 0 6px 24px rgba(0, 229, 255, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.1);
-            margin-bottom: 1.2rem;
+            box-shadow: 0 6px 24px rgba(77, 217, 255, 0.35);
+            margin: 0;
             animation: fadeInUp 0.8s ease-out 0.2s backwards;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -455,11 +436,11 @@
             font-weight: 800;
             font-size: 1rem;
             color: #ffffff;
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0099ff 100%);
+            background: linear-gradient(135deg, #4dd9ff 0%, #6dc8ff 100%);
             padding: 0.7rem 1.8rem;
             border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 16px rgba(0, 229, 255, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(77, 217, 255, 0.3);
             animation: fadeInUp 0.8s ease-out 0.4s backwards, pulse 3s ease-in-out infinite;
             backdrop-filter: none;
             -webkit-font-smoothing: antialiased;
@@ -477,13 +458,13 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.95) 0%, rgba(0, 163, 255, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(91, 163, 255, 0.9) 0%, rgba(122, 184, 255, 0.9) 100%);
             backdrop-filter: blur(10px);
             color: #ffffff;
             padding: 0.8rem 2rem;
             border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(91, 163, 255, 0.3);
             user-select: none;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -563,16 +544,14 @@
 
         /* Enhanced mobile responsiveness */
         @media (max-width: 1024px) {
-            .hero-content h1 {
+            .hero-title {
                 font-size: 2.8rem;
                 padding: 1rem 2rem;
-                margin-bottom: 1rem;
             }
 
-            .hero-content p {
+            .hero-subtitle {
                 font-size: 1.3rem;
                 padding: 0.8rem 1.8rem;
-                margin-bottom: 1rem;
             }
 
             .slogan-badge {
@@ -592,17 +571,15 @@
                 padding: 4.5rem 1rem 1rem;
             }
 
-            .hero-content h1 {
+            .hero-title {
                 font-size: 1.8rem;
                 padding: 0.7rem 1.3rem;
                 line-height: 1.2;
-                margin-bottom: 0.7rem;
             }
 
-            .hero-content p {
+            .hero-subtitle {
                 font-size: 1rem;
                 padding: 0.6rem 1.3rem;
-                margin-bottom: 0.7rem;
             }
 
             .hero-slogans {
@@ -612,10 +589,6 @@
             .slogan-badge {
                 font-size: 0.8rem;
                 padding: 0.6rem 1.2rem;
-            }
-
-            .hero-bottom {
-                gap: 0.5rem;
             }
 
             .brand-strip {
@@ -646,16 +619,14 @@
                 padding: 4rem 0.8rem 1rem;
             }
 
-            .hero-content h1 {
+            .hero-title {
                 font-size: 1.4rem;
                 padding: 0.6rem 1rem;
-                margin-bottom: 0.5rem;
             }
 
-            .hero-content p {
+            .hero-subtitle {
                 font-size: 0.85rem;
                 padding: 0.5rem 1rem;
-                margin-bottom: 0.5rem;
             }
 
             .hero-slogans {
@@ -665,10 +636,6 @@
             .slogan-badge {
                 font-size: 0.7rem;
                 padding: 0.5rem 1rem;
-            }
-
-            .hero-bottom {
-                gap: 0.4rem;
             }
 
             .brand-pill {
@@ -1233,24 +1200,21 @@
     <section class="hero" id="hero">
         <!-- Full-cover bright product slideshow -->
         <div class="hero-slideshow" id="heroSlideshow"></div>
-        <div class="hero-content">
-            <h1>Connecting People to Quality Gadgets</h1>
-            <p>Affordable Prices. Top Brands. Backed by Warranty.</p>
-            <div class="hero-slogans">
-                <span class="slogan-badge">⭐ BEST DEALS ON QUALITY PRODUCTS</span>
-                <span class="slogan-badge">🛍️ SHOP SMART. SAVE BIG.</span>
-            </div>
+        <h1 class="hero-title">Connecting People to Quality Gadgets</h1>
+        <p class="hero-subtitle">Affordable Prices. Top Brands. Backed by Warranty.</p>
+        <div class="hero-slogans">
+            <span class="slogan-badge">⭐ BEST DEALS ON QUALITY PRODUCTS</span>
+            <span class="slogan-badge">🛍️ SHOP SMART. SAVE BIG.</span>
         </div>
-        <div class="hero-bottom">
-            <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="smoothScroll('#products')">
-                    🛍️ Browse Products
-                </button>
-                <a href="#" class="btn btn-success" id="heroWhatsApp">
-                    💬 Chat on WhatsApp
-                </a>
-            </div>
-            <div class="brand-strip">
+        <div class="hero-buttons">
+            <button class="btn btn-primary" onclick="smoothScroll('#products')">
+                🛍️ Browse Products
+            </button>
+            <a href="#" class="btn btn-success" id="heroWhatsApp">
+                💬 Chat on WhatsApp
+            </a>
+        </div>
+        <div class="brand-strip">
             <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
             <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
             <span class="brand-pill" data-brand="Hisense" onclick="filterByBrand('Hisense', this)">HISENSE</span>
@@ -1263,7 +1227,6 @@
             <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
             <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
             <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
-            </div>
         </div>
     </section>
 
