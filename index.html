@@ -256,7 +256,7 @@
             overflow: hidden;
         }
 
-        /* Single full-cover bright slideshow */
+        /* Multi-image dynamic grid wall covering hero */
         .hero-slideshow {
             position: absolute;
             top: 0;
@@ -264,28 +264,77 @@
             width: 100%;
             height: 100%;
             z-index: 0;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 8px;
+            padding: 8px;
         }
 
-        .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-image-tile {
+            position: relative;
             width: 100%;
             height: 100%;
+            overflow: hidden;
+            border-radius: 8px;
             opacity: 0;
-            transition: opacity 3s ease-in-out;
+            animation: fadeInTile 1.2s ease-out forwards;
         }
 
-        .hero-slide.active {
-            opacity: 1;
+        @keyframes fadeInTile {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        .hero-slide img {
+        .hero-image-tile img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
-            filter: brightness(1);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Zoom animation classes */
+        .hero-image-tile.zoom-focus img {
+            transform: scale(1.3);
+            filter: brightness(1.1);
+        }
+
+        .hero-image-tile.zoom-out img {
+            transform: scale(0.85);
+            filter: brightness(0.7);
+        }
+
+        /* Position swap animation */
+        @keyframes swapPositions {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; transform: scale(0.9); }
+        }
+
+        .hero-image-tile.swapping {
+            animation: swapPositions 1.5s ease-in-out;
+        }
+
+        /* Responsive grid */
+        @media (max-width: 1024px) {
+            .hero-slideshow {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-slideshow {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+                gap: 4px;
+                padding: 4px;
+            }
         }
 
         /* Thin gradient bands at top & bottom so text doesn't vanish on bright images */
@@ -2131,29 +2180,84 @@
         });
 
         // =============================================
-        // HERO SLIDESHOW — single bright full-cover layer
+        // HERO DYNAMIC IMAGE GRID — mesmerizing multi-image wall
         // =============================================
         function initHeroSlideshow() {
             const container = document.getElementById('heroSlideshow');
             const heroImages = products
                 .filter(p => ['televisions','bundle','audio','airfryer','microwave','watch'].includes(p.category))
                 .map(p => p.image);
-            const shuffled = heroImages.sort(() => 0.5 - Math.random()).slice(0, 15);
+            
+            // Shuffle and get enough images to fill the grid (24 tiles for 6x4 grid)
+            const shuffled = [...heroImages, ...heroImages, ...heroImages]
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 24);
+            
+            // Create image tiles with staggered fade-in
             shuffled.forEach((src, i) => {
-                const slide = document.createElement('div');
-                slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
-                slide.innerHTML = '<img src="' + src + '" alt="Naxol Connecta Product">';
-                container.appendChild(slide);
+                const tile = document.createElement('div');
+                tile.className = 'hero-image-tile';
+                tile.style.animationDelay = (i * 0.05) + 's';
+                tile.innerHTML = '<img src="' + src + '" alt="Product" loading="lazy">';
+                container.appendChild(tile);
             });
-            let current = 0;
-            const slides = container.querySelectorAll('.hero-slide');
-            if (slides.length > 1) {
-                setInterval(() => {
-                    slides[current].classList.remove('active');
-                    current = (current + 1) % slides.length;
-                    slides[current].classList.add('active');
-                }, 60000);
+
+            const tiles = container.querySelectorAll('.hero-image-tile');
+            let focusedIndex = -1;
+
+            // Mesmerizing animation cycle
+            function animationCycle() {
+                // Remove previous effects
+                tiles.forEach(t => {
+                    t.classList.remove('zoom-focus', 'zoom-out');
+                });
+
+                // Pick random tile to zoom focus
+                const newFocus = Math.floor(Math.random() * tiles.length);
+                tiles[newFocus].classList.add('zoom-focus');
+
+                // Zoom out 2-3 nearby tiles for depth effect
+                const zoomOutCount = 2 + Math.floor(Math.random() * 2);
+                for (let i = 0; i < zoomOutCount; i++) {
+                    const randomTile = Math.floor(Math.random() * tiles.length);
+                    if (randomTile !== newFocus) {
+                        tiles[randomTile].classList.add('zoom-out');
+                    }
+                }
+
+                focusedIndex = newFocus;
             }
+
+            // Position swap animation
+            function swapRandomTiles() {
+                const tile1Index = Math.floor(Math.random() * tiles.length);
+                let tile2Index = Math.floor(Math.random() * tiles.length);
+                while (tile2Index === tile1Index) {
+                    tile2Index = Math.floor(Math.random() * tiles.length);
+                }
+
+                const tile1 = tiles[tile1Index];
+                const tile2 = tiles[tile2Index];
+                const img1Src = tile1.querySelector('img').src;
+                const img2Src = tile2.querySelector('img').src;
+
+                tile1.classList.add('swapping');
+                tile2.classList.add('swapping');
+
+                setTimeout(() => {
+                    tile1.querySelector('img').src = img2Src;
+                    tile2.querySelector('img').src = img1Src;
+                    setTimeout(() => {
+                        tile1.classList.remove('swapping');
+                        tile2.classList.remove('swapping');
+                    }, 1500);
+                }, 750);
+            }
+
+            // Start animation cycles with varied timing for mesmerizing effect
+            setTimeout(() => animationCycle(), 1000);
+            setInterval(animationCycle, 4500); // Zoom focus changes every 4.5 seconds
+            setInterval(swapRandomTiles, 8000); // Position swaps every 8 seconds
         }
 
         // =============================================
