@@ -2612,66 +2612,43 @@
                 </div>
             `;
 
-            // Add to Cart button handler (use touchend on mobile with flag to prevent click double-fire)
+            // Add to Cart button is the ONLY way to select on mobile
             const cartBtn = card.querySelector('.add-to-cart-btn');
-            let cartHandledByTouch = false;
-            cartBtn.addEventListener('touchend', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                cartHandledByTouch = true;
-                toggleProductSelection(product);
-            });
             cartBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (cartHandledByTouch) {
-                    cartHandledByTouch = false;
-                    return;
-                }
+                e.preventDefault();
                 toggleProductSelection(product);
             });
 
             // ── Interaction: PC double-click=lightbox, single-click=select
-            //    Mobile: short tap=lightbox, long press=select ──
+            //    Mobile: tap card image = lightbox only (selection via Add to Cart button) ──
             let clickTimer = null;
-            let longPressTimer = null;
-            let longPressed = false;
             const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
             if (isMobile) {
-                // MOBILE: long press = select, short tap = open image
-                // Track touch position to distinguish scroll from tap
+                // MOBILE: tap anywhere on card (except Add to Cart btn) = open lightbox
                 let touchStartX = 0;
                 let touchStartY = 0;
                 let touchMoved = false;
 
                 card.addEventListener('touchstart', (e) => {
-                    longPressed = false;
                     touchMoved = false;
                     touchStartX = e.touches[0].clientX;
                     touchStartY = e.touches[0].clientY;
-                    longPressTimer = setTimeout(() => {
-                        if (!touchMoved) {
-                            longPressed = true;
-                            toggleProductSelection(product);
-                            if (navigator.vibrate) navigator.vibrate(30);
-                        }
-                    }, 600);
                 }, { passive: true });
 
                 card.addEventListener('touchmove', (e) => {
                     const dx = Math.abs(e.touches[0].clientX - touchStartX);
                     const dy = Math.abs(e.touches[0].clientY - touchStartY);
-                    // If finger moved more than 10px, it's a scroll not a tap
                     if (dx > 10 || dy > 10) {
                         touchMoved = true;
-                        clearTimeout(longPressTimer);
                     }
                 }, { passive: true });
 
                 card.addEventListener('touchend', (e) => {
-                    clearTimeout(longPressTimer);
-                    // Only open lightbox on a genuine tap (no scroll, no long press)
-                    if (!longPressed && !touchMoved) {
+                    // Don't open lightbox if the tap was on the Add to Cart button
+                    if (e.target.closest('.add-to-cart-btn')) return;
+                    if (!touchMoved) {
                         e.preventDefault();
                         openLightbox(product);
                     }
