@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Naxol Connecta - Connecting People to Quality Gadgets at Affordable Prices & Warranty. Shop premium electronics from top brands.">
+    <title>NAXOL CONNECTA | Premium Electronics & Gadgets</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =============================================
+           GLOBAL & RESET
+           ============================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a0033 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* =============================================
+           COLOR SCHEME
+           ============================================= */
+        :root {
+            --bg-dark: #0d0d1a;
+            --bg-card: #1a1a2e;
+            --accent-cyan: #00e5ff;
+            --accent-orange: #ff6b00;
+            --accent-pink: #ff6eb4;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --success-green: #4caf50;
+            --whatsapp-green: #25d366;
+            --border-light: #2a2a3e;
+        }
+
+        /* =============================================
+           TYPOGRAPHY
+           ============================================= */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        /* =============================================
+           BUTTONS & INTERACTIONS
+           ============================================= */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #00b8cc 100%);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--accent-orange);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+        }
+
+        .btn-success {
+            background: var(--whatsapp-green);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* =============================================
+           STICKY NAVIGATION BAR
+           ============================================= */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(13, 13, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .whatsapp-float {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .nav-logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* =============================================
+           HERO SECTION
+           ============================================= */
+        .hero {
+            position: relative;
+            background: linear-gradient(-45deg, #141428, #1f1045, #351a6e, #1a2a4a, #141428);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: var(--text-primary);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            overflow: hidden;
+        }
+
+        /* Hero Slideshow Background */
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.25) blur(2px);
+        }
+
+        .hero-content, .hero-slogans, .hero-buttons, .brand-strip {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+
+        .hero-slogans {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .slogan-badge {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .brand-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .brand-pill {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* =============================================
+           CATEGORY FILTER BAR
+           ============================================= */
+        .category-filter {
+            display: flex;
+            gap: 1rem;
+            padding: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            margin: 2rem 0;
+            border-radius: 12px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-cyan);
+            color: #000;
+            border-color: var(--accent-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .category-filter {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* =============================================
+           PRODUCT GRID
+           ============================================= */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .product-card.selected {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+        }
+
+        .product-card.selected.accessories {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 20px rgba(255, 110, 180, 0.5);
+        }
+
+        .product-image {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1a1a2e, #2a2a3e);
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 107, 0, 0.9);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-orange);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .selected-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-cyan);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            z-index: 3;
+        }
+
+        .product-card.selected.accessories .selected-badge {
+            background: var(--accent-pink);
+            color: white;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .product-card.selected.accessories .category-tag {
+            color: var(--accent-pink);
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .product-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .product-card.selected.accessories .product-price {
+            color: var(--accent-pink);
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-info {
+                padding: 1rem;
+            }
+
+            .product-name {
+                font-size: 1rem;
+            }
+
+            .product-price {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* =============================================
+           WHY CHOOSE US SECTION
+           ============================================= */
+        .why-choose-us {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .why-choose-us h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-block h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-block p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* =============================================
+           CONTACT SECTION
+           ============================================= */
+        .contact-section {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(255, 107, 0, 0.05));
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            margin: 2rem 0;
+            font-size: 1.1rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .contact-link {
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-text {
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* =============================================
+           FLOATING SELECTION BAR
+           ============================================= */
+        .floating-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid var(--accent-cyan);
+            padding: 1rem 2rem;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .floating-bar.active {
+            display: flex;
+        }
+
+        .selection-info {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .selection-total {
+            color: var(--accent-cyan);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        .floating-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .floating-bar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .selection-info {
+                width: 100%;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .floating-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .floating-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            body.selection-active {
+                padding-bottom: 150px;
+            }
+        }
+
+        /* =============================================
+           MODALS
+           ============================================= */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-cyan);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column;
+        }
+
+        .modal-note {
+            background: rgba(0, 229, 255, 0.1);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* =============================================
+           FOOTER
+           ============================================= */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-light);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-contact {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-contact a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-contact a:hover {
+            transform: scale(1.1);
+        }
+
+        .footer-copyright {
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* =============================================
+           UTILITY CLASSES
+           ============================================= */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 2rem 0 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- =============================================
+         NAVIGATION BAR
+         ============================================= -->
+    <nav>
+        <a href="#" class="nav-logo">NAXOL CONNECTA ⚡</a>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#deals">Deals</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#" class="whatsapp-float" id="globalWhatsApp" title="Chat on WhatsApp">💬</a>
+    </nav>
+
+    <!-- =============================================
+         HERO SECTION
+         ============================================= -->
+    <section class="hero" id="hero">
+        <!-- Hero Slideshow Background -->
+        <div class="hero-slideshow" id="heroSlideshow"></div>
+        <div class="hero-content">
+            <h1>Connecting People to Quality Gadgets</h1>
+            <p>Affordable Prices. Top Brands. Backed by Warranty.</p>
+            <div class="hero-slogans">
+                <span class="slogan-badge">⭐ BEST DEALS ON QUALITY PRODUCTS</span>
+                <span class="slogan-badge">🛍️ SHOP SMART. SAVE BIG.</span>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="smoothScroll('#products')">
+                    🛍️ Browse Products
+                </button>
+                <a href="#" class="btn btn-success" id="heroWhatsApp">
+                    💬 Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+        <div class="brand-strip">
+            <span class="brand-pill">SONY</span>
+            <span class="brand-pill">SAMSUNG</span>
+            <span class="brand-pill">HISENSE</span>
+            <span class="brand-pill">SKYWORTH</span>
+            <span class="brand-pill">LG</span>
+            <span class="brand-pill">KENWOOD</span>
+            <span class="brand-pill">RUSSELL HOBBS</span>
+            <span class="brand-pill">DEFY</span>
+            <span class="brand-pill">JBL</span>
+            <span class="brand-pill">HUAWEI</span>
+            <span class="brand-pill">VOLKANO</span>
+            <span class="brand-pill">BENNETT READ</span>
+        </div>
+    </section>
+
+    <!-- =============================================
+         CATEGORY FILTER
+         ============================================= -->
+    <div class="container">
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="televisions">📺 Televisions</button>
+            <button class="filter-btn" data-filter="bundle">📦 Bundle Deals</button>
+            <button class="filter-btn" data-filter="audio">🔊 Sound Bars & Audio</button>
+            <button class="filter-btn" data-filter="airfryer">🌀 Air Fryers</button>
+            <button class="filter-btn" data-filter="microwave">🍽️ Microwaves & Kitchen</button>
+            <button class="filter-btn" data-filter="kettle">☕ Electric Kettles</button>
+            <button class="filter-btn" data-filter="iron">🧺 Irons</button>
+            <button class="filter-btn" data-filter="watch">⌚ Smart Watches</button>
+            <button class="filter-btn" data-filter="accessories">💍 Accessories & Jewellery</button>
+        </div>
+
+        <!-- =============================================
+             PRODUCTS GRID
+             ============================================= -->
+        <section id="products">
+            <h2 class="section-title">Our Premium Collection</h2>
+            <div class="products-grid" id="productsGrid"></div>
+        </section>
+
+        <!-- =============================================
+             WHY CHOOSE US
+             ============================================= -->
+        <section class="why-choose-us">
+            <h2>Why Choose Naxol Connecta?</h2>
+            <div class="features-grid">
+                <div class="feature-block">
+                    <div class="feature-icon">✅</div>
+                    <h3>100% Genuine Products</h3>
+                    <p>All items sourced directly from authorized dealers and manufacturers.</p>
+                </div>
+                <div class="feature-block">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Fast Local Delivery</h3>
+                    <p>Quick and reliable delivery to your doorstep across the region.</p>
+                </div>
+                <div class="feature-block">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Warranty on All Items</h3>
+                    <p>Full warranty coverage and after-sales support for peace of mind.</p>
+                </div>
+                <div class="feature-block">
+                    <div class="feature-icon">💬</div>
+                    <h3>Fast Customer Support</h3>
+                    <p>Order via WhatsApp or Email — We reply fast with detailed information.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             CONTACT SECTION
+             ============================================= -->
+        <section class="contact-section" id="contact">
+            <h2>Get In Touch With Us</h2>
+            <div class="contact-info">
+                <p><strong>📞 Call:</strong> <a href="tel:+263778812350" class="contact-link">+263 778812350</a></p>
+            </div>
+            <div class="contact-buttons">
+                <a href="#" class="btn btn-success btn-large" id="contactWhatsApp">
+                    💬 Chat on WhatsApp
+                </a>
+                <a href="mailto:3mashingerangarirait3@gmail.com?subject=Naxol%20Connecta%20Inquiry" class="btn btn-primary btn-large">
+                    ✉️ Email Us
+                </a>
+            </div>
+            <p class="contact-text">
+                Place your order or inquiry and we'll reply with payment details via your chosen channel. 
+                Browse our products, select what you need, and reach out with confidence.
+            </p>
+        </section>
+    </div>
+
+    <!-- =============================================
+         FLOATING SELECTION BAR
+         ============================================= -->
+    <div class="floating-bar" id="floatingBar">
+        <div class="selection-info">
+            <span id="selectionCount">0 item(s) selected</span>
+            <span class="selection-total">Est. Total: $<span id="selectionTotal">0</span></span>
+        </div>
+        <div class="floating-buttons">
+            <button class="btn btn-outline btn-small" onclick="clearAllSelections()">Clear All</button>
+            <button class="btn btn-primary btn-small" onclick="openInquireModal()">📩 Inquire</button>
+            <button class="btn btn-secondary btn-small" onclick="openOrderModal()">🛒 Order</button>
+        </div>
+    </div>
+
+    <!-- =============================================
+         INQUIRE MODAL
+         ============================================= -->
+    <div class="modal" id="inquireModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('inquireModal')">×</button>
+            <h3 class="modal-title">How would you like to inquire?</h3>
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                Select your preferred contact method and we'll prepare the details for you.
+            </p>
+            <div class="modal-buttons">
+                <button class="btn btn-success" onclick="handleInquireWhatsApp()">
+                    💬 Via WhatsApp
+                </button>
+                <button class="btn btn-primary" onclick="handleInquireEmail()">
+                    ✉️ Via Email
+                </button>
+            </div>
+            <div class="modal-note">
+                💡 You can edit the message before sending to add any additional details.
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================
+         ORDER MODAL
+         ============================================= -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('orderModal')">×</button>
+            <h3 class="modal-title">How would you like to place your order?</h3>
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                Choose your preferred payment and contact method below.
+            </p>
+            <div class="modal-buttons">
+                <button class="btn btn-success" onclick="handleOrderWhatsApp()">
+                    💬 Order via WhatsApp
+                </button>
+                <button class="btn btn-primary" onclick="handleOrderEmail()">
+                    ✉️ Order via Email
+                </button>
+            </div>
+            <div class="modal-note">
+                📋 We will reply with payment details once your order is received. 
+                You can edit the message before sending.
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================
+         FOOTER
+         ============================================= -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">NAXOL CONNECTA</div>
+            <p class="footer-tagline">Connecting People to Quality Gadgets at Affordable Prices & Warranty</p>
+            <div class="footer-contact">
+                <a href="tel:+263778812350">📞 +263 778812350</a>
+                <a href="#" id="footerWhatsApp">💬 +27623667462</a>
+                <a href="mailto:3mashingerangarirait3@gmail.com">✉️ Email Us</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Naxol Connecta. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =============================================
+        // ✏️  NAXOL CONNECTA — EDIT YOUR DETAILS HERE
+        // =============================================
+        // Update these constants with your business details
+        // Then update each product's whatsapp, email, and image fields below
+        
+        const STORE_NAME = "NAXOL CONNECTA";
+        const GLOBAL_WHATSAPP = "+27623667462";
+        const GLOBAL_EMAIL = "3mashingerangarirait3@gmail.com";
+        const CALL_NUMBER = "+263778812350";
+
+        // =============================================
+        // PRODUCT DATABASE
+        // =============================================
+        const products = [
+            // ── TELEVISIONS ──────────────────────────────
+            {
+                id: 1,
+                name: "Skyworth LED TV 43\"",
+                brand: "Skyworth",
+                category: "televisions",
+                price: 300,
+                description: "Crystal clear 43\" display with stunning color accuracy",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/skyworth led tv @ 300 us.jpeg"
+            },
+            {
+                id: 2,
+                name: "Skyworth LED TV 50\"",
+                brand: "Skyworth",
+                category: "televisions",
+                price: 450,
+                description: "Immersive 50\" viewing experience with advanced display tech",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/skyworth led tv @ 450 us.jpeg"
+            },
+            {
+                id: 3,
+                name: "Skyworth LED TV 60\"",
+                brand: "Skyworth",
+                category: "televisions",
+                price: 570,
+                description: "Premium 60\" display for ultimate home cinema experience",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/skyworth led tv 6o inch @  570 us .jpeg"
+            },
+            {
+                id: 4,
+                name: "Hisense LED TV 40\"",
+                brand: "Hisense",
+                category: "televisions",
+                price: 300,
+                description: "Sleek 40\" display with excellent brightness and contrast",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 40  @300 usd.jpeg"
+            },
+            {
+                id: 5,
+                name: "Hisense LED TV 43\"",
+                brand: "Hisense",
+                category: "televisions",
+                price: 380,
+                description: "Full HD 43\" Hisense TV with vibrant colors and sharp details",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/43 Hisense TV. 380 usd.jpeg"
+            },
+            {
+                id: 6,
+                name: "Samsung Smart TV 50\"",
+                brand: "Samsung",
+                category: "televisions",
+                price: 430,
+                description: "Smart 50\" TV with streaming apps and premium image quality",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/50 Samsung Smart TV @ 430 usd.jpeg"
+            },
+
+            // ── BUNDLE DEALS ──────────────────────────────
+            {
+                id: 7,
+                name: "Hisense 43\" TV + 5.1ch Soundbar Set",
+                brand: "Hisense",
+                category: "bundle",
+                price: 600,
+                description: "Complete entertainment system with TV and premium audio",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/A set of Hisense 5.1 channel and 43 Hisense TV. 600 USD.jpeg",
+                promo: true
+            },
+            {
+                id: 8,
+                name: "Samsung 50\" TV + 2.1ch Soundbar Set",
+                brand: "Samsung",
+                category: "bundle",
+                price: 650,
+                description: "Smart TV bundle with integrated soundbar system",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Complete Set Samasung 50 TV and A Samsung Sound Bar 2.1 Channel @ 650 usd (Promotion).jpeg",
+                promo: true
+            },
+            {
+                id: 9,
+                name: "Hisense Kit (TV + Audio Bundle)",
+                brand: "Hisense",
+                category: "bundle",
+                price: 500,
+                description: "Value bundle combining TV and audio for complete entertainment",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/hisense kit @500 usd.jpeg",
+                promo: true
+            },
+
+            // ── SOUND BARS & AUDIO ───────────────────────────────
+            {
+                id: 10,
+                name: "Sony Soundbar HT-S20R 5.1ch",
+                brand: "Sony",
+                category: "audio",
+                price: 450,
+                description: "Premium 5.1 channel soundbar with rich, immersive audio",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/SONY Sound Bar HT-S20R 5.1 Channel @ 450 usd..jpeg"
+            },
+            {
+                id: 11,
+                name: "Hisense Soundbar 5.1ch",
+                brand: "Hisense",
+                category: "audio",
+                price: 300,
+                description: "Affordable 5.1 channel soundbar for great movie experience",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/5.1 channel Hisense Sound Bar at 300 usd.jpeg"
+            },
+            {
+                id: 12,
+                name: "Hisense Soundbar 540W 5.1ch",
+                brand: "Hisense",
+                category: "audio",
+                price: 450,
+                description: "Powerful 540W 5.1 soundbar with dynamic sound output",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Sound Bar 540W 5.1 CHANNEL @ 450 usd..jpeg"
+            },
+            {
+                id: 13,
+                name: "Hisense Soundbar 480W 3.1ch",
+                brand: "Hisense",
+                category: "audio",
+                price: 400,
+                description: "Compact 480W 3.1 soundbar perfect for any room size",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Sound Bar  480W 3.1 Channel @400 usd..jpeg"
+            },
+            {
+                id: 14,
+                name: "JBL FLIP 6 Portable Speaker",
+                brand: "JBL",
+                category: "audio",
+                price: 240,
+                description: "Waterproof portable speaker with punchy 360° sound",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/JBL FLIP 6 Portable @ 240 usd.jpeg"
+            },
+            {
+                id: 15,
+                name: "JBL Cinema Soundbar SB560 3.1ch",
+                brand: "JBL",
+                category: "audio",
+                price: 400,
+                description: "Cinema-quality 3.1 soundbar with virtual surround sound",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/JBL Sound Bar Cinema SB560 3.1 @400 usd.jpeg"
+            },
+            {
+                id: 16,
+                name: "JBL Partybox Club 120",
+                brand: "JBL",
+                category: "audio",
+                price: 500,
+                description: "Compact party speaker with dynamic LED lighting and deep bass",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/JBL Partybox Club 120 @ 500 usd..jpeg"
+            },
+            {
+                id: 17,
+                name: "LG S40T Soundbar 2.1ch",
+                brand: "LG",
+                category: "audio",
+                price: 280,
+                description: "Sleek 2.1 soundbar with wireless subwoofer for deep bass",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/LG S40T Sound Bar  2.1 Channel @280 usd.jpeg"
+            },
+            {
+                id: 18,
+                name: "Samsung Soundbar B650F 3.1ch",
+                brand: "Samsung",
+                category: "audio",
+                price: 300,
+                description: "Smart 3.1 soundbar with Object Tracking Sound technology",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung Sound Bar B650F 3.1 Channel @ 300 usd.jpeg"
+            },
+
+            // ── AIR FRYERS ───────────────────────────────
+            {
+                id: 19,
+                name: "Hisense Air Fryer 6L",
+                brand: "Hisense",
+                category: "airfryer",
+                price: 80,
+                description: "Compact 6L air fryer for healthier cooking with less oil",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Aifryer 6 litres @ 80 usd.jpeg"
+            },
+            {
+                id: 20,
+                name: "Hisense Air Fryer",
+                brand: "Hisense",
+                category: "airfryer",
+                price: 90,
+                description: "Reliable air fryer with consistent cooking performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Airfryer at 90 usd.jpeg"
+            },
+            {
+                id: 21,
+                name: "Air Fryer 4.7L",
+                brand: "Generic",
+                category: "airfryer",
+                price: 90,
+                description: "Efficient 4.7L air fryer perfect for small families",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Aifryer 4.7 litres@ 90 usd.jpeg"
+            },
+            {
+                id: 22,
+                name: "Defy Air Fryer 7.6L",
+                brand: "Defy",
+                category: "airfryer",
+                price: 120,
+                description: "Spacious 7.6L air fryer with multiple cooking modes",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy Aifryer 7.6 litres @120 usd..jpeg"
+            },
+            {
+                id: 23,
+                name: "Kenwood Double Air Fryer 8L",
+                brand: "Kenwood",
+                category: "airfryer",
+                price: 180,
+                description: "Premium 8L double air fryer for simultaneous cooking",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/8L Kenwood Double Airfryer @ 180 usd..jpeg"
+            },
+            {
+                id: 24,
+                name: "Bennett Read Double Air Fryer 9.7L",
+                brand: "Bennett Read",
+                category: "airfryer",
+                price: 190,
+                description: "Spacious 9.7L double air fryer with independent baskets",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/9.7 Litres Bennet Read Double  Airfryer @ 190 usd..jpeg"
+            },
+            {
+                id: 25,
+                name: "Hisense Double Air Fryer 8.6L",
+                brand: "Hisense",
+                category: "airfryer",
+                price: 200,
+                description: "Reliable 8.6L double air fryer with smart temperature control",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/8.6L Hisense Double Airfryer @ 200 usd..jpeg"
+            },
+
+            // ── MICROWAVES & KITCHEN ─────────────────────────────
+            {
+                id: 26,
+                name: "Kenwood Rice Cooker",
+                brand: "Kenwood",
+                category: "microwave",
+                price: 90,
+                description: "Essential rice cooker for perfect rice every time",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Kenwood Rice Cooker @ 90 usd.jpeg"
+            },
+            {
+                id: 27,
+                name: "Hisense Pressure Cooker",
+                brand: "Hisense",
+                category: "microwave",
+                price: 100,
+                description: "Safe and efficient pressure cooker for quick meal prep",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Pressures Cooker @ 100 usd..jpeg"
+            },
+            {
+                id: 28,
+                name: "Hisense Microwave 20L",
+                brand: "Hisense",
+                category: "microwave",
+                price: 100,
+                description: "Compact 20L microwave for quick and efficient cooking",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/20 litres Hisense Microwave @100 usd.jpeg"
+            },
+            {
+                id: 29,
+                name: "Defy Microwave 30L",
+                brand: "Defy",
+                category: "microwave",
+                price: 130,
+                description: "Mid-size 30L microwave with excellent performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 30 litres Microwave @ 130 usd..jpeg"
+            },
+            {
+                id: 30,
+                name: "Russell Hobbs Microwave 30L",
+                brand: "Russell Hobbs",
+                category: "microwave",
+                price: 150,
+                description: "Premium 30L microwave with advanced cooking features",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/30 litres Russell Hobs @ 150 usd.jpeg"
+            },
+            {
+                id: 31,
+                name: "Hisense Microwave 34L",
+                brand: "Hisense",
+                category: "microwave",
+                price: 160,
+                description: "Large capacity 34L microwave for family cooking",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Microwave 34 litres @ 160 usd.jpeg"
+            },
+            {
+                id: 32,
+                name: "Hisense Microwave 37L",
+                brand: "Hisense",
+                category: "microwave",
+                price: 210,
+                description: "XL 37L Hisense microwave with grill function",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/37 litres Hisens Microwave @ 200 usd.jpeg"
+            },
+            {
+                id: 33,
+                name: "Defy Digital Grill Microwave 34L",
+                brand: "Defy",
+                category: "microwave",
+                price: 230,
+                description: "Premium 34L microwave with digital grill functionality",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/34 litres Defy Digital Grill Micriwave @ 230 usd..jpeg"
+            },
+            {
+                id: 34,
+                name: "LG NeoChef Microwave 42L",
+                brand: "LG",
+                category: "microwave",
+                price: 280,
+                description: "Advanced 42L LG NeoChef with uneven heating reduction",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/42 litres LG NeoChef Microwave @ 280 usd.jpeg"
+            },
+
+            // ── ELECTRIC KETTLES ─────────────────────────────
+            {
+                id: 35,
+                name: "Russell Hobbs Kettle 1.7L",
+                brand: "Russell Hobbs",
+                category: "kettle",
+                price: 60,
+                description: "Classic 1.7L kettle with rapid boil technology",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/1.7 litres @ 60 usd.jpeg"
+            },
+            {
+                id: 36,
+                name: "Kenwood Kettle (Large)",
+                brand: "Kenwood",
+                category: "kettle",
+                price: 50,
+                description: "Large capacity Kenwood kettle for family use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/kenwood @ 50 usd.jpeg"
+            },
+            {
+                id: 37,
+                name: "Defy Kettle (Large)",
+                brand: "Defy",
+                category: "kettle",
+                price: 45,
+                description: "Reliable large capacity Defy kettle",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/defy @ 45 usd.jpeg"
+            },
+            {
+                id: 38,
+                name: "Kenwood Kettle (Compact)",
+                brand: "Kenwood",
+                category: "kettle",
+                price: 30,
+                description: "Compact Kenwood kettle perfect for small spaces",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/kenwood @30 usd.jpeg"
+            },
+            {
+                id: 39,
+                name: "Milex Double Kettle",
+                brand: "Milex",
+                category: "kettle",
+                price: 50,
+                description: "Innovative double kettle for dual capacity brewing",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/melix double @ 50 usd.jpeg"
+            },
+            {
+                id: 40,
+                name: "Milex Kettle",
+                brand: "Milex",
+                category: "kettle",
+                price: 30,
+                description: "Budget-friendly Milex kettle with great performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/milex @ 30 usd.jpeg"
+            },
+            {
+                id: 41,
+                name: "Mellerware Kettle",
+                brand: "Mellerware",
+                category: "kettle",
+                price: 35,
+                description: "Quality Mellerware kettle for everyday use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/mellerware @ 35 usd.jpeg"
+            },
+            {
+                id: 42,
+                name: "Pineware Kettle",
+                brand: "Pineware",
+                category: "kettle",
+                price: 15,
+                description: "Economical Pineware kettle for basic needs",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/pineware @ 15 usd.jpeg"
+            },
+            {
+                id: 43,
+                name: "Sokany Kettle",
+                brand: "Sokany",
+                category: "kettle",
+                price: 25,
+                description: "Affordable Sokany kettle with standard features",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/sokany @ 25 usd.jpeg"
+            },
+            {
+                id: 44,
+                name: "Mellerware Kettle (Standard)",
+                brand: "Mellerware",
+                category: "kettle",
+                price: 40,
+                description: "Standard Mellerware kettle with reliable performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/mellerware @ 40 usd.jpeg"
+            },
+            {
+                id: 45,
+                name: "Mellerware Kettle (Red)",
+                brand: "Mellerware",
+                category: "kettle",
+                price: 40,
+                description: "Stylish red Mellerware kettle with modern design",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/mellerware red @ 40 usd.jpeg"
+            },
+            {
+                id: 46,
+                name: "Defy Kettle (Compact)",
+                brand: "Defy",
+                category: "kettle",
+                price: 35,
+                description: "Compact Defy kettle perfect for on-the-go use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/defy @ 35 usd.jpeg"
+            },
+
+            // ── IRONS ─────────────────────────────────────
+            {
+                id: 47,
+                name: "Sokany Steam Iron",
+                brand: "Sokany",
+                category: "iron",
+                price: 25,
+                description: "Affordable steam iron for everyday ironing needs",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/sokany steam @ 25 usd.jpeg"
+            },
+            {
+                id: 48,
+                name: "Bennett Read Iron",
+                brand: "Bennett Read",
+                category: "iron",
+                price: 38,
+                description: "Quality Bennett Read iron with precision temperature control",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/bennett read @ 38 usd.jpeg"
+            },
+            {
+                id: 49,
+                name: "Defy Iron",
+                brand: "Defy",
+                category: "iron",
+                price: 60,
+                description: "Premium Defy iron with advanced steam technology",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/defy @ 60 usd.jpeg"
+            },
+            {
+                id: 50,
+                name: "Sokany Iron (Standard)",
+                brand: "Sokany",
+                category: "iron",
+                price: 35,
+                description: "Standard Sokany iron for reliable daily use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/sokany @ 35 usd.jpeg"
+            },
+
+            // ── SMART WATCHES & FITNESS BANDS ────────────────────
+            {
+                id: 51,
+                name: "Samsung Galaxy Watch Fit 3 (Pink)",
+                brand: "Samsung",
+                category: "watch",
+                price: 115,
+                description: "Stylish pink fitness watch with comprehensive health tracking",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung Galaxy Watch Fit 3 pink .jpeg"
+            },
+            {
+                id: 52,
+                name: "Samsung Galaxy Fit 3 (Black)",
+                brand: "Samsung",
+                category: "watch",
+                price: 115,
+                description: "Black Galaxy Fit 3 with fitness tracking and notifications",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung Galaxy Fit 3 115 usd. black.jpeg"
+            },
+            {
+                id: 53,
+                name: "Samsung Galaxy Active 7",
+                brand: "Samsung",
+                category: "watch",
+                price: 360,
+                description: "Premium Galaxy Watch Active 7 with full smartphone integration",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung Galaxy Active 7 @ 360 usd.jpeg"
+            },
+            {
+                id: 54,
+                name: "Huawei Band 10",
+                brand: "Huawei",
+                category: "watch",
+                price: 70,
+                description: "Affordable Huawei fitness band with excellent battery life",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Huawei Band 10 @ 70 usd.jpeg"
+            },
+            {
+                id: 55,
+                name: "Volkano Chroma Series Watch",
+                brand: "Volkano",
+                category: "watch",
+                price: 40,
+                description: "Colorful Chroma Series smartwatch with vibrant display",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Volkano Chroma Series @ 40 usd..jpeg"
+            },
+            {
+                id: 56,
+                name: "Volkano Power Series Watch",
+                brand: "Volkano",
+                category: "watch",
+                price: 45,
+                description: "Rugged Power Series watch designed for active lifestyles",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Volkano Power Series @ 45 usd.jpeg"
+            },
+
+            // ── ACCESSORIES & JEWELLERY ──────────────────────────
+            {
+                id: 57,
+                name: "God Is In Control Bracelet",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 30,
+                description: "Inspirational bracelet with meaningful message",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/God Is In Control @ 30 usd.jpeg"
+            },
+            {
+                id: 58,
+                name: "Bella Bear Bracelet",
+                brand: "Bella Bear",
+                category: "accessories",
+                price: 40,
+                description: "Cute Bella Bear branded bracelet perfect as a gift",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/bella bear @40 usd.jpeg"
+            },
+            {
+                id: 59,
+                name: "Haiaveng Bracelet",
+                brand: "Haiaveng",
+                category: "accessories",
+                price: 40,
+                description: "Elegant Haiaveng bracelet with intricate design",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Haiaveng @40 usd.jpeg"
+            },
+            {
+                id: 60,
+                name: "Bracelet (Silver)",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 50,
+                description: "Classic silver bracelet with timeless appeal",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/unbranded @ 50 usd .jpeg"
+            },
+            {
+                id: 61,
+                name: "Bracelet (Gold)",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 50,
+                description: "Elegant gold-toned bracelet for special occasions",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/unbranded gold  @ 50 usd  .jpeg"
+            },
+            {
+                id: 62,
+                name: "Bracelet (Thin)",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 50,
+                description: "Delicate thin bracelet for everyday wear",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/unbranded thin @ 50 usd .jpeg"
+            },
+            {
+                id: 63,
+                name: "Bracelet (Gold & Black)",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 50,
+                description: "Stylish two-tone gold and black bracelet",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/unbranded gold n black @ 50 usd.jpeg"
+            },
+            {
+                id: 64,
+                name: "Bracelet (Black & Blue)",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 60,
+                description: "Modern black and blue bracelet with vibrant colors",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/unbrandend black n blue @ 60 usd .jpeg"
+            },
+            {
+                id: 65,
+                name: "Bracelet (Black)",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 35,
+                description: "Classic black bracelet versatile with any outfit",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/unbranded black @ 35 usd.jpeg"
+            },
+            {
+                id: 66,
+                name: "Studded Bangles",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 35,
+                description: "Bold studded bangles with edgy fashion statement",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Studded Bangles @ 35 usd.jpeg"
+            },
+            {
+                id: 67,
+                name: "Gold CZ Stainless Steel Bangle",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 55,
+                description: "Premium gold CZ stainless steel bangle set",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hold CZ Stainless Steel @ 55 usd.jpeg"
+            },
+            {
+                id: 68,
+                name: "Necklace",
+                brand: "Unbranded",
+                category: "accessories",
+                price: 30,
+                description: "Elegant necklace perfect for any occasion",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Necklace @ 30 usd.jpeg"
+            }
+        ];
+
+        // =============================================
+        // STATE MANAGEMENT
+        // =============================================
+        let selectedProducts = new Set();
+        let currentFilter = "all";
+
+        // =============================================
+        // DOM INITIALIZATION
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            setupFilterButtons();
+            setupWhatsAppLinks();
+            setupEventListeners();
+            initHeroSlideshow();
+        });
+
+        // =============================================
+        // HERO SLIDESHOW — cycles product images slowly
+        // =============================================
+        function initHeroSlideshow() {
+            const container = document.getElementById('heroSlideshow');
+            // Pick a selection of hero-worthy product images (TVs, bundles, audio, big items)
+            const heroImages = products
+                .filter(p => ['televisions','bundle','audio','airfryer','microwave','watch'].includes(p.category))
+                .map(p => p.image);
+            // Shuffle and take up to 15 images
+            const shuffled = heroImages.sort(() => 0.5 - Math.random()).slice(0, 15);
+            shuffled.forEach((src, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+                slide.innerHTML = '<img src="' + src + '" alt="Naxol Connecta Product">';
+                container.appendChild(slide);
+            });
+            let current = 0;
+            const slides = container.querySelectorAll('.hero-slide');
+            if (slides.length > 1) {
+                setInterval(() => {
+                    slides[current].classList.remove('active');
+                    current = (current + 1) % slides.length;
+                    slides[current].classList.add('active');
+                }, 60000); // Change every 60 seconds (1 minute)
+            }
+        }
+
+        // =============================================
+        // RENDER PRODUCTS
+        // =============================================
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                if (currentFilter === 'all' || product.category === currentFilter) {
+                    const card = createProductCard(product);
+                    grid.appendChild(card);
+                }
+            });
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            if (product.category === 'accessories') {
+                card.classList.add('accessories');
+            }
+            if (selectedProducts.has(product.id)) {
+                card.classList.add('selected');
+            }
+
+            card.dataset.category = product.category;
+            card.dataset.productId = product.id;
+
+            const isSelected = selectedProducts.has(product.id);
+            const selectedBadge = isSelected ? `<div class="selected-badge">✔</div>` : '';
+            const promoBadge = product.promo ? '<div class="promo-badge">PROMO</div>' : '';
+
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="brand-badge">${product.brand}</div>
+                    ${promoBadge}
+                    ${selectedBadge}
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">${product.category.toUpperCase()}</span>
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-price">$${product.price}</div>
+                </div>
+            `;
+
+            card.addEventListener('click', () => toggleProductSelection(product));
+            return card;
+        }
+
+        // =============================================
+        // PRODUCT SELECTION
+        // =============================================
+        function toggleProductSelection(product) {
+            if (selectedProducts.has(product.id)) {
+                selectedProducts.delete(product.id);
+            } else {
+                selectedProducts.add(product.id);
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            renderProducts();
+            updateFloatingBar();
+        }
+
+        function updateFloatingBar() {
+            const floatingBar = document.getElementById('floatingBar');
+            const selectionCount = document.getElementById('selectionCount');
+            const selectionTotal = document.getElementById('selectionTotal');
+
+            if (selectedProducts.size === 0) {
+                floatingBar.classList.remove('active');
+                document.body.classList.remove('selection-active');
+            } else {
+                floatingBar.classList.add('active');
+                document.body.classList.add('selection-active');
+
+                const count = selectedProducts.size;
+                selectionCount.textContent = `${count} item(s) selected`;
+
+                const total = Array.from(selectedProducts).reduce((sum, id) => {
+                    const product = products.find(p => p.id === id);
+                    return sum + (product ? product.price : 0);
+                }, 0);
+
+                selectionTotal.textContent = total;
+            }
+        }
+
+        function clearAllSelections() {
+            selectedProducts.clear();
+            updateUI();
+        }
+
+        // =============================================
+        // CATEGORY FILTER
+        // =============================================
+        function setupFilterButtons() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderProducts();
+                });
+            });
+        }
+
+        // =============================================
+        // MODALS
+        // =============================================
+        function openInquireModal() {
+            document.getElementById('inquireModal').classList.add('active');
+        }
+
+        function openOrderModal() {
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // =============================================
+        // INQUIRE FLOW
+        // =============================================
+        function handleInquireWhatsApp() {
+            const selectedArray = Array.from(selectedProducts);
+            const productNames = selectedArray
+                .map(id => products.find(p => p.id === id)?.name)
+                .filter(Boolean)
+                .join(', ');
+
+            let whatsappNumber = GLOBAL_WHATSAPP;
+            if (selectedArray.length === 1) {
+                const product = products.find(p => p.id === selectedArray[0]);
+                if (product?.whatsapp) {
+                    whatsappNumber = product.whatsapp;
+                }
+            }
+
+            const message = `Hi ${STORE_NAME}, I'd like to inquire about the following product(s): ${productNames}. Could you please share more details including availability? Thank you.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodedMessage}`;
+
+            window.open(whatsappLink, '_blank');
+            closeModal('inquireModal');
+        }
+
+        function handleInquireEmail() {
+            const selectedArray = Array.from(selectedProducts);
+            const productNames = selectedArray
+                .map(id => products.find(p => p.id === id)?.name)
+                .filter(Boolean)
+                .join(', ');
+
+            let emailAddress = GLOBAL_EMAIL;
+            if (selectedArray.length === 1) {
+                const product = products.find(p => p.id === selectedArray[0]);
+                if (product?.email) {
+                    emailAddress = product.email;
+                }
+            }
+
+            const subject = `Product Inquiry – ${productNames}`;
+            const body = `Hello ${STORE_NAME}, I am interested in the following item(s): ${productNames}. Please send more information. Thank you.`;
+
+            const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+            closeModal('inquireModal');
+        }
+
+        // =============================================
+        // ORDER FLOW
+        // =============================================
+        function handleOrderWhatsApp() {
+            const selectedArray = Array.from(selectedProducts);
+            const productNames = selectedArray
+                .map(id => products.find(p => p.id === id)?.name)
+                .filter(Boolean)
+                .join(', ');
+
+            const total = Array.from(selectedProducts).reduce((sum, id) => {
+                const product = products.find(p => p.id === id);
+                return sum + (product ? product.price : 0);
+            }, 0);
+
+            let whatsappNumber = GLOBAL_WHATSAPP;
+            if (selectedArray.length === 1) {
+                const product = products.find(p => p.id === selectedArray[0]);
+                if (product?.whatsapp) {
+                    whatsappNumber = product.whatsapp;
+                }
+            }
+
+            const message = `Hi ${STORE_NAME}, I'd like to place an order for: ${productNames} (Qty: 1 each) — Estimated Total: $${total}. Please confirm availability and send payment details. Thank you.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodedMessage}`;
+
+            window.open(whatsappLink, '_blank');
+            closeModal('orderModal');
+        }
+
+        function handleOrderEmail() {
+            const selectedArray = Array.from(selectedProducts);
+            const productNames = selectedArray
+                .map(id => products.find(p => p.id === id)?.name)
+                .filter(Boolean)
+                .join(', ');
+
+            const total = Array.from(selectedProducts).reduce((sum, id) => {
+                const product = products.find(p => p.id === id);
+                return sum + (product ? product.price : 0);
+            }, 0);
+
+            let emailAddress = GLOBAL_EMAIL;
+            if (selectedArray.length === 1) {
+                const product = products.find(p => p.id === selectedArray[0]);
+                if (product?.email) {
+                    emailAddress = product.email;
+                }
+            }
+
+            const subject = `Order Request – ${productNames}`;
+            const body = `Hello ${STORE_NAME}, I would like to order the following: ${productNames} (Qty: 1 each) — Estimated Total: $${total}. Please reply with payment details and confirmation. Thank you.`;
+
+            const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+            closeModal('orderModal');
+        }
+
+        // =============================================
+        // WHATSAPP LINKS
+        // =============================================
+        function setupWhatsAppLinks() {
+            const whatsappMessage = `Hi ${STORE_NAME}, I'm interested in your products. Please tell me more!`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappLink = `https://wa.me/${GLOBAL_WHATSAPP.replace(/\D/g, '')}?text=${encodedMessage}`;
+
+            document.getElementById('globalWhatsApp').href = whatsappLink;
+            document.getElementById('heroWhatsApp').href = whatsappLink;
+            document.getElementById('contactWhatsApp').href = whatsappLink;
+            document.getElementById('footerWhatsApp').href = whatsappLink;
+        }
+
+        // =============================================
+        // UTILITY FUNCTIONS
+        // =============================================
+        function smoothScroll(selector) {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function setupEventListeners() {
+            // Smooth scroll for nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        smoothScroll(href);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
