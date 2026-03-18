@@ -320,10 +320,19 @@
                 display: list-item;
             }
 
-            /* Hide hero subtitle & slogans on mobile */
+            /* Hide hero subtitle, slogans & brand strip on mobile */
             .hero-subtitle,
             .hero-slogans {
-                display: none;
+                display: none !important;
+            }
+
+            .brand-strip {
+                display: none !important;
+            }
+
+            /* Show the mobile brand toggle button */
+            .brand-toggle-btn {
+                display: inline-flex !important;
             }
 
             /* Search bar responsive */
@@ -498,6 +507,51 @@
 
         .brand-strip {
             padding-top: 0;
+        }
+
+        /* Brand toggle button - only visible on mobile */
+        .brand-toggle-btn {
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            background: linear-gradient(135deg, #5ba3ff 0%, #7ab8ff 100%);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 16px rgba(91, 163, 255, 0.3);
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .brand-toggle-btn:hover,
+        .brand-toggle-btn:active {
+            transform: scale(1.05);
+            box-shadow: 0 6px 24px rgba(91, 163, 255, 0.5);
+        }
+
+        /* Mobile brand panel (slides down below hero) */
+        .mobile-brand-panel {
+            display: none;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 1.5rem;
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .mobile-brand-panel.active {
+            display: block;
+        }
+
+        .mobile-brand-panel .brand-pill {
+            margin: 0.25rem;
         }
 
         /* ── BOLD WHITE TEXT WITH LIGHT BLUE BACKGROUNDS ── */
@@ -692,29 +746,6 @@
                 line-height: 1.2;
             }
 
-            .hero-subtitle {
-                font-size: 1rem;
-                padding: 0.6rem 1.3rem;
-            }
-
-            .hero-slogans {
-                gap: 0.5rem;
-            }
-
-            .slogan-badge {
-                font-size: 0.8rem;
-                padding: 0.6rem 1.2rem;
-            }
-
-            .brand-strip {
-                gap: 0.5rem;
-            }
-
-            .brand-pill {
-                font-size: 0.75rem;
-                padding: 0.5rem 1.2rem;
-            }
-
             .hero-buttons {
                 flex-direction: column;
                 width: 100%;
@@ -737,25 +768,6 @@
             .hero-title {
                 font-size: 1.4rem;
                 padding: 0.6rem 1rem;
-            }
-
-            .hero-subtitle {
-                font-size: 0.85rem;
-                padding: 0.5rem 1rem;
-            }
-
-            .hero-slogans {
-                gap: 0.4rem;
-            }
-
-            .slogan-badge {
-                font-size: 0.7rem;
-                padding: 0.5rem 1rem;
-            }
-
-            .brand-pill {
-                font-size: 0.7rem;
-                padding: 0.4rem 1rem;
             }
         }
 
@@ -1342,7 +1354,8 @@
                 💬 Chat on WhatsApp
             </a>
         </div>
-        <div class="brand-strip">
+        <button class="brand-toggle-btn" onclick="toggleBrandStrip()">🏷️ Brands</button>
+        <div class="brand-strip" id="brandStrip">
             <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
             <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
             <span class="brand-pill" data-brand="Hisense" onclick="filterByBrand('Hisense', this)">HISENSE</span>
@@ -1357,6 +1370,22 @@
             <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
         </div>
     </section>
+
+    <!-- Mobile brand panel (toggled by Brands button) -->
+    <div class="mobile-brand-panel" id="mobileBrandPanel">
+        <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
+        <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
+        <span class="brand-pill" data-brand="Hisense" onclick="filterByBrand('Hisense', this)">HISENSE</span>
+        <span class="brand-pill" data-brand="Skyworth" onclick="filterByBrand('Skyworth', this)">SKYWORTH</span>
+        <span class="brand-pill" data-brand="LG" onclick="filterByBrand('LG', this)">LG</span>
+        <span class="brand-pill" data-brand="Kenwood" onclick="filterByBrand('Kenwood', this)">KENWOOD</span>
+        <span class="brand-pill" data-brand="Russell Hobbs" onclick="filterByBrand('Russell Hobbs', this)">RUSSELL HOBBS</span>
+        <span class="brand-pill" data-brand="Defy" onclick="filterByBrand('Defy', this)">DEFY</span>
+        <span class="brand-pill" data-brand="JBL" onclick="filterByBrand('JBL', this)">JBL</span>
+        <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
+        <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
+        <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
+    </div>
 
     <!-- =============================================
          CATEGORY FILTER
@@ -2829,14 +2858,34 @@
             e.preventDefault();
             const panel = document.getElementById('promisePanel');
             panel.classList.toggle('active');
+            // Close brand panel if open
+            document.getElementById('mobileBrandPanel').classList.remove('active');
         }
 
-        // Close promise panel when clicking elsewhere
+        // =============================================
+        // BRAND STRIP TOGGLE (MOBILE)
+        // =============================================
+        function toggleBrandStrip() {
+            const panel = document.getElementById('mobileBrandPanel');
+            panel.classList.toggle('active');
+            // Close promise panel if open
+            document.getElementById('promisePanel').classList.remove('active');
+        }
+
+        // Close panels when clicking elsewhere
         document.addEventListener('click', function(e) {
-            const panel = document.getElementById('promisePanel');
-            if (panel && panel.classList.contains('active')) {
-                if (!panel.contains(e.target) && !e.target.closest('.nav-promise-item')) {
-                    panel.classList.remove('active');
+            const promisePanel = document.getElementById('promisePanel');
+            const brandPanel = document.getElementById('mobileBrandPanel');
+
+            if (promisePanel && promisePanel.classList.contains('active')) {
+                if (!promisePanel.contains(e.target) && !e.target.closest('.nav-promise-item')) {
+                    promisePanel.classList.remove('active');
+                }
+            }
+
+            if (brandPanel && brandPanel.classList.contains('active')) {
+                if (!brandPanel.contains(e.target) && !e.target.closest('.brand-toggle-btn')) {
+                    brandPanel.classList.remove('active');
                 }
             }
         });
