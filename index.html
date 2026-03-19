@@ -1631,25 +1631,18 @@
             display: block;
             border-radius: 0;
         }
-        .deals-popup-overlay-text {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
-            padding: 1.4rem 1rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            line-height: 1.3;
-        }
         .deals-popup-title {
+            position: absolute;
+            bottom: 1rem; left: 0; right: 0;
             color: #fff;
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            font-size: 1rem;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
-            display: block;
+            font-size: 1.05rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.6);
             text-align: center;
+            line-height: 1.3;
+            pointer-events: none;
+            z-index: 1;
         }
 
         /* =============================================
@@ -1671,22 +1664,11 @@
             transition: opacity 0.3s;
         }
         .deals-promo-card img:hover { opacity: 0.85; }
-        .deals-promo-card-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
-            padding: 1.6rem 1.2rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .deals-promo-card-overlay p {
-            color: #fff;
+        .deals-inquire-btn {
+            display: block;
+            margin: 1rem auto 0;
             font-size: 0.85rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-            text-align: center;
-            margin: 0;
+            padding: 0.5rem 1.6rem;
         }
         @media (max-width: 768px) {
             .deals-popup-title { font-size: 1.1rem; }
@@ -1844,11 +1826,8 @@
             <h2 class="section-title">🔥 Customised Deals</h2>
             <div class="deals-promo-card">
                 <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Customised Deals" onclick="openDealsPopup(event)">
-                <div class="deals-promo-card-overlay">
-                    <p>Looking for something specific? We craft personalised deals tailored to your budget and needs.</p>
-                    <button class="btn btn-primary" style="font-size:0.8rem;padding:0.45rem 1.2rem;" onclick="openDealsPopup(event)">🔥 View Deals</button>
-                </div>
             </div>
+            <button class="btn btn-primary deals-inquire-btn" onclick="inquireAboutDeals()">📩 Inquire</button>
         </section>
 
         <!-- =============================================
@@ -2002,10 +1981,7 @@
         <div class="deals-popup-box">
             <button class="deals-popup-close" onclick="closeDealsPopup()" aria-label="Close">&times;</button>
             <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Deals" class="deals-popup-img">
-            <div class="deals-popup-overlay-text">
-                <span class="deals-popup-title">🔥 Check out Customised Deals!</span>
-                <button class="btn btn-primary" style="font-size:0.8rem;padding:0.45rem 1.2rem;" onclick="closeDealsPopup(); smoothScroll('#deals')">📌 View All Deals</button>
-            </div>
+            <span class="deals-popup-title">🔥 Check out Customised Deals!</span>
         </div>
     </div>
 
@@ -3571,6 +3547,13 @@
         // =============================================
         // INQUIRE FLOW
         // =============================================
+        function inquireAboutDeals() {
+            const message = `Hi ${STORE_NAME}, I'd like to inquire about your customised deals. Could you please share more details? Thank you.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${GLOBAL_WHATSAPP.replace(/\D/g, '')}?text=${encodedMessage}`;
+            window.open(whatsappLink, '_blank');
+        }
+
         function handleInquireWhatsApp() {
             const selectedArray = Array.from(selectedProducts);
             const productNames = selectedArray
