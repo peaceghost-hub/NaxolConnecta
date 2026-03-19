@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" width="640" height="180">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&amp;family=Barlow+Condensed:wght@300;400;600&amp;display=swap');
+    </style>
+
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#08081a"/>
+      <stop offset="100%" stop-color="#0d1030"/>
+    </linearGradient>
+
+    <!-- N-letter gradient (white top to cool blue-white bottom) -->
+    <linearGradient id="nfill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#c8d8f8"/>
+    </linearGradient>
+
+    <!-- Divider gradient (fade in/out) -->
+    <linearGradient id="divline" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#00e5ff" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#00e5ff" stop-opacity="0.45"/>
+      <stop offset="75%"  stop-color="#00e5ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Glow filter for nodes and hex -->
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Soft glow for hex ring -->
+    <filter id="hexglow" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Subtle glow behind full icon -->
+    <filter id="aura" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- === BACKGROUND BADGE === -->
+  <rect x="0" y="0" width="640" height="180" rx="18" fill="url(#bg)"/>
+
+  <!-- Very subtle circuit grid (decorative, background only) -->
+  <g opacity="0.06" stroke="#00e5ff" stroke-width="0.4" fill="none">
+    <line x1="170" y1="40"  x2="610" y2="40"/>
+    <line x1="170" y1="90"  x2="610" y2="90"/>
+    <line x1="170" y1="140" x2="610" y2="140"/>
+    <line x1="380" y1="20"  x2="380" y2="160"/>
+    <line x1="500" y1="20"  x2="500" y2="160"/>
+    <line x1="610" y1="20"  x2="610" y2="160"/>
+  </g>
+
+  <!-- === ICON MARK === -->
+  <!-- Hex: center (82, 90), radius 60 -->
+  <!-- Flat-top vertices: top, tr, br, bottom, bl, tl -->
+  <!-- r=60, cx=82, cy=90 -->
+  <!-- top:    (82, 30)    -->
+  <!-- tr:     (133.96, 60)   sin60*60=51.96, cos60*60=30  -->
+  <!-- br:     (133.96, 120)  -->
+  <!-- bottom: (82, 150)   -->
+  <!-- bl:     (30.04, 120)   -->
+  <!-- tl:     (30.04, 60)    -->
+
+  <!-- Aura glow behind hex (very soft) -->
+  <polygon points="82,30 134,60 134,120 82,150 30,120 30,60"
+           fill="#00e5ff" opacity="0.12" filter="url(#aura)"/>
+
+  <!-- Hex outer ring glow pass -->
+  <polygon points="82,30 134,60 134,120 82,150 30,120 30,60"
+           fill="none" stroke="#00e5ff" stroke-width="2.5" opacity="0.55"
+           filter="url(#hexglow)"/>
+
+  <!-- Hex outer ring crisp pass -->
+  <polygon points="82,30 134,60 134,120 82,150 30,120 30,60"
+           fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.75"/>
+
+  <!-- Inner hex ring (subtle secondary ring) -->
+  <polygon points="82,40 126,64 126,116 82,140 38,116 38,64"
+           fill="none" stroke="#00e5ff" stroke-width="0.6" opacity="0.18"/>
+
+  <!-- Circuit traces: N-corners → nearest hex vertices -->
+  <!-- top-left of N → top-left hex vertex -->
+  <line x1="51" y1="47" x2="30" y2="60" stroke="#00e5ff" stroke-width="1.4" opacity="0.65"/>
+  <!-- top-right of N → top-right hex vertex -->
+  <line x1="113" y1="47" x2="134" y2="60" stroke="#00e5ff" stroke-width="1.4" opacity="0.65"/>
+  <!-- bottom-left of N → bottom-left hex vertex -->
+  <line x1="51" y1="133" x2="30" y2="120" stroke="#00e5ff" stroke-width="1.4" opacity="0.65"/>
+  <!-- bottom-right of N → bottom-right hex vertex -->
+  <line x1="113" y1="133" x2="134" y2="120" stroke="#00e5ff" stroke-width="1.4" opacity="0.65"/>
+
+  <!-- N LETTER: x=[51,113], y=[47,133] — 62px wide, 86px tall -->
+  <!-- Bar width: 11px. Shape: left-vert, diagonal, right-vert -->
+  <path d="M 51 47
+           L 51 133
+           L 62 133
+           L 62 76
+           L 102 133
+           L 113 133
+           L 113 47
+           L 102 47
+           L 102 104
+           L 62 47
+           Z"
+        fill="url(#nfill)"/>
+
+  <!-- Circuit node dots: glowing cyan at N corners & diagonal center -->
+  <!-- Top-left corner node -->
+  <circle cx="51" cy="47" r="5.5" fill="#00e5ff" filter="url(#glow)"/>
+  <circle cx="51" cy="47" r="2.5" fill="#ffffff"/>
+  <!-- Top-right corner node -->
+  <circle cx="113" cy="47" r="5.5" fill="#00e5ff" filter="url(#glow)"/>
+  <circle cx="113" cy="47" r="2.5" fill="#ffffff"/>
+  <!-- Bottom-left corner node -->
+  <circle cx="51" cy="133" r="5.5" fill="#00e5ff" filter="url(#glow)"/>
+  <circle cx="51" cy="133" r="2.5" fill="#ffffff"/>
+  <!-- Bottom-right corner node -->
+  <circle cx="113" cy="133" r="5.5" fill="#00e5ff" filter="url(#glow)"/>
+  <circle cx="113" cy="133" r="2.5" fill="#ffffff"/>
+  <!-- Center diagonal node -->
+  <circle cx="82" cy="90" r="4" fill="#00e5ff" opacity="0.75" filter="url(#glow)"/>
+
+  <!-- Hex vertex decorative dots -->
+  <circle cx="82"  cy="30"  r="2.5" fill="#00e5ff" opacity="0.45"/>
+  <circle cx="134" cy="60"  r="2.5" fill="#00e5ff" opacity="0.45"/>
+  <circle cx="134" cy="120" r="2.5" fill="#00e5ff" opacity="0.45"/>
+  <circle cx="82"  cy="150" r="2.5" fill="#00e5ff" opacity="0.45"/>
+  <circle cx="30"  cy="120" r="2.5" fill="#00e5ff" opacity="0.45"/>
+  <circle cx="30"  cy="60"  r="2.5" fill="#00e5ff" opacity="0.45"/>
+
+  <!-- === DIVIDER LINE === -->
+  <line x1="162" y1="16" x2="162" y2="164" stroke="url(#divline)" stroke-width="1.2"/>
+
+  <!-- === WORDMARK === -->
+
+  <!-- "NAXOL" — large bold brand name -->
+  <text
+    x="182" y="92"
+    font-family="'Orbitron', 'Courier New', monospace"
+    font-weight="900"
+    font-size="56"
+    fill="#ffffff"
+    letter-spacing="2">NAXOL</text>
+
+  <!-- Orange brand accent bar under NAXOL (short, punchy) -->
+  <rect x="182" y="99" width="44" height="3" rx="1.5" fill="#ff6b00"/>
+  <!-- Smaller secondary bar -->
+  <rect x="232" y="99" width="14" height="3" rx="1.5" fill="#ff6b00" opacity="0.4"/>
+
+  <!-- "CONNECTA" — lighter, spaced, cyan -->
+  <text
+    x="187" y="126"
+    font-family="'Barlow Condensed', 'Arial Narrow', Arial, sans-serif"
+    font-weight="300"
+    font-size="23"
+    fill="#00e5ff"
+    letter-spacing="10.5">CONNECTA</text>
+
+  <!-- Small orange bullet before CONNECTA -->
+  <circle cx="178" cy="121" r="2.8" fill="#ff6b00" opacity="0.85"/>
+
+  <!-- Tagline -->
+  <text
+    x="184" y="151"
+    font-family="'Barlow Condensed', 'Arial Narrow', Arial, sans-serif"
+    font-weight="400"
+    font-size="12"
+    fill="#4a5878"
+    letter-spacing="2.8">CONNECTING PEOPLE TO QUALITY GADGETS</text>
+
+  <!-- === DECORATIVE RIGHT ELEMENT: signal arc === -->
+  <!-- Three concentric signal arcs emanating from right side of logo (subtle branding) -->
+  <g opacity="0.12" fill="none" stroke="#00e5ff" stroke-linecap="round">
+    <path d="M 596 68 A 22 22 0 0 1 596 112" stroke-width="2"/>
+    <path d="M 605 58 A 32 32 0 0 1 605 122" stroke-width="1.5"/>
+    <path d="M 614 48 A 42 42 0 0 1 614 132" stroke-width="1"/>
+  </g>
+  <circle cx="596" cy="90" r="3" fill="#00e5ff" opacity="0.2"/>
+</svg>

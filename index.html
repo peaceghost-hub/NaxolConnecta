@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Naxol Connecta - Connecting People to Quality Gadgets at Affordable Prices & Warranty. Shop premium electronics from top brands.">
     <title>NAXOL CONNECTA | Premium Electronics & Gadgets</title>
+    <link rel="icon" href="website images/naxol-connecta-icon.svg" type="image/svg+xml">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -172,14 +173,17 @@
         }
 
         .nav-logo {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-cyan);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        .nav-logo-img {
+            height: 50px;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
@@ -319,6 +323,9 @@
             .nav-promise-item {
                 display: list-item;
             }
+
+            .nav-logo { height: 36px; }
+            .nav-logo-img { height: 36px; }
 
             /* Hide hero subtitle, slogans & brand strip on mobile */
             .hero-subtitle,
@@ -1427,9 +1434,8 @@
                 font-size: 0.75rem;
             }
 
-            .nav-logo {
-                font-size: 1rem;
-            }
+            .nav-logo { height: 36px; }
+            .nav-logo-img { height: 36px; }
 
             .filter-toggle {
                 font-size: 0.8rem;
@@ -1531,9 +1537,8 @@
                 gap: 0.6rem;
             }
 
-            .nav-logo {
-                font-size: 0.9rem;
-            }
+            .nav-logo { height: 30px; }
+            .nav-logo-img { height: 30px; }
 
             .product-name {
                 font-size: 0.78rem;
@@ -1557,6 +1562,91 @@
                 font-size: 0.7rem;
             }
         }
+
+        /* =============================================
+           DEALS POPUP
+           ============================================= */
+        .deals-popup-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .deals-popup-overlay.hidden { display: none; }
+        .deals-popup-box {
+            position: relative;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 16px;
+            padding: 1.5rem;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0,229,255,0.25);
+        }
+        .deals-popup-close {
+            position: absolute;
+            top: 0.6rem; right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .deals-popup-close:hover { color: #fff; }
+        .deals-popup-img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 0.75rem 0 1rem;
+            display: block;
+        }
+        .deals-popup-title {
+            color: var(--accent-cyan);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* =============================================
+           DEALS SECTION
+           ============================================= */
+        .deals-section { margin: 3rem 0; }
+        .deals-promo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 620px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .deals-promo-card img {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .deals-promo-card img:hover { opacity: 0.85; }
+        .deals-promo-text {
+            padding: 1.5rem;
+        }
+        .deals-promo-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .deals-popup-title { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
@@ -1564,11 +1654,11 @@
          NAVIGATION BAR
          ============================================= -->
     <nav>
-        <a href="#" class="nav-logo">NAXOL CONNECTA ⚡</a>
+        <a href="#" class="nav-logo"><img src="website images/naxol-connecta-logo.svg" alt="Naxol Connecta" class="nav-logo-img"></a>
         <ul class="nav-links">
             <li><a href="#hero">Home</a></li>
             <li><a href="#products">Products</a></li>
-            <li><a href="#deals">Deals</a></li>
+            <li><a href="#" onclick="openDealsPopup(event)">Deals</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="nav-promise-item"><a href="#" onclick="togglePromisePanel(event)">Promise</a></li>
         </ul>
@@ -1621,6 +1711,14 @@
             <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
             <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
             <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
+            <span class="brand-pill" data-brand="Univa" onclick="filterByBrand('Univa', this)">UNIVA</span>
+            <span class="brand-pill" data-brand="Totai" onclick="filterByBrand('Totai', this)">TOTAI</span>
+            <span class="brand-pill" data-brand="Bosch" onclick="filterByBrand('Bosch', this)">BOSCH</span>
+            <span class="brand-pill" data-brand="Digimark" onclick="filterByBrand('Digimark', this)">DIGIMARK</span>
+            <span class="brand-pill" data-brand="Good Mama" onclick="filterByBrand('Good Mama', this)">GOOD MAMA</span>
+            <span class="brand-pill" data-brand="Harman Kardon" onclick="filterByBrand('Harman Kardon', this)">HARMAN KARDON</span>
+            <span class="brand-pill" data-brand="Sound Select" onclick="filterByBrand('Sound Select', this)">SOUND SELECT</span>
+            <span class="brand-pill" data-brand="Nesty" onclick="filterByBrand('Nesty', this)">NESTY</span>
         </div>
     </section>
 
@@ -1638,6 +1736,14 @@
         <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
         <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
         <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
+        <span class="brand-pill" data-brand="Univa" onclick="filterByBrand('Univa', this)">UNIVA</span>
+        <span class="brand-pill" data-brand="Totai" onclick="filterByBrand('Totai', this)">TOTAI</span>
+        <span class="brand-pill" data-brand="Bosch" onclick="filterByBrand('Bosch', this)">BOSCH</span>
+        <span class="brand-pill" data-brand="Digimark" onclick="filterByBrand('Digimark', this)">DIGIMARK</span>
+        <span class="brand-pill" data-brand="Good Mama" onclick="filterByBrand('Good Mama', this)">GOOD MAMA</span>
+        <span class="brand-pill" data-brand="Harman Kardon" onclick="filterByBrand('Harman Kardon', this)">HARMAN KARDON</span>
+        <span class="brand-pill" data-brand="Sound Select" onclick="filterByBrand('Sound Select', this)">SOUND SELECT</span>
+        <span class="brand-pill" data-brand="Nesty" onclick="filterByBrand('Nesty', this)">NESTY</span>
     </div>
 
     <!-- =============================================
@@ -1661,6 +1767,8 @@
                     <button class="filter-btn" data-filter="iron">🧺 Irons</button>
                     <button class="filter-btn" data-filter="watch">⌚ Smart Watches</button>
                     <button class="filter-btn" data-filter="accessories">💍 Accessories & Jewellery</button>
+                    <button class="filter-btn" data-filter="stoves">🍳 Stoves & Cooktops</button>
+                    <button class="filter-btn" data-filter="washing">🫧 Washing Machines</button>
                 </div>
             </div>
         </div>
@@ -1683,6 +1791,20 @@
         <section id="products">
             <h2 class="section-title">Our Premium Collection</h2>
             <div class="products-grid" id="productsGrid"></div>
+        </section>
+
+        <!-- =============================================
+             DEALS SECTION
+             ============================================= -->
+        <section class="deals-section" id="deals">
+            <h2 class="section-title">🔥 Customised Deals</h2>
+            <div class="deals-promo-card">
+                <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Customised Deals" onclick="openDealsPopup(event)">
+                <div class="deals-promo-text">
+                    <p>Looking for something specific? We craft personalised deals tailored to your budget and needs. Contact us today!</p>
+                    <button class="btn btn-primary" onclick="openDealsPopup(event)">🔥 View Deals</button>
+                </div>
+            </div>
         </section>
 
         <!-- =============================================
@@ -1827,6 +1949,18 @@
         <img id="lightboxImage" src="" alt="Product Image">
         <div class="lightbox-caption" id="lightboxCaption"></div>
         <div class="lightbox-price" id="lightboxPrice"></div>
+    </div>
+
+    <!-- =============================================
+         DEALS POPUP (auto-opens on page load)
+         ============================================= -->
+    <div class="deals-popup-overlay hidden" id="dealsPopup">
+        <div class="deals-popup-box">
+            <button class="deals-popup-close" onclick="closeDealsPopup()" aria-label="Close">&times;</button>
+            <div class="deals-popup-title">🔥 Check out Customised Deals!</div>
+            <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Deals" class="deals-popup-img">
+            <button class="btn btn-primary" onclick="closeDealsPopup(); smoothScroll('#deals')">📌 View All Deals</button>
+        </div>
     </div>
 
     <script>
@@ -2612,6 +2746,403 @@
                 whatsapp: GLOBAL_WHATSAPP,
                 email: GLOBAL_EMAIL,
                 image: "website images/Necklace @ 30 usd.jpeg"
+            },
+
+            // ── AUDIO (new additions) ─────────────────────────
+            {
+                id: 69,
+                name: "JBL Go Essential Portable Speaker",
+                brand: "JBL",
+                category: "audio",
+                price: 50,
+                description: "Compact waterproof portable speaker with big sound",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/JBL Go Essential@ 50 usd.jpeg"
+            },
+            {
+                id: 70,
+                name: "JBL PartyBox Club 120",
+                brand: "JBL",
+                category: "audio",
+                price: 480,
+                description: "Powerful party speaker with built-in light show and deep bass",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/JBL PARTY BOX CLUB 120@   480 usd.jpeg"
+            },
+            {
+                id: 71,
+                name: "Sound Select Speaker",
+                brand: "Sound Select",
+                category: "audio",
+                price: 45,
+                description: "Quality sound in a compact and stylish design",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Sound Select 45 usd.jpeg"
+            },
+            {
+                id: 72,
+                name: "Harman Kardon Speaker",
+                brand: "Harman Kardon",
+                category: "audio",
+                price: 450,
+                description: "Premium Harman Kardon audio system with crystal clear sound",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Herman Kardon @450 usd.jpeg"
+            },
+            {
+                id: 73,
+                name: "JBL Grip Compact Speaker",
+                brand: "JBL",
+                category: "audio",
+                price: 120,
+                description: "Compact JBL speaker with powerful bass and wireless connectivity",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/JBL Grip  Compact  @120 usd.jpeg"
+            },
+
+            // ── MICROWAVES (new additions) ────────────────────
+            {
+                id: 74,
+                name: "Samsung 32L Microwave",
+                brand: "Samsung",
+                category: "microwave",
+                price: 210,
+                description: "32 litre Samsung microwave with multiple cooking functions",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung  32 litres Microwaves @ 210 usd.jpeg"
+            },
+            {
+                id: 75,
+                name: "Samsung 40L Microwave",
+                brand: "Samsung",
+                category: "microwave",
+                price: 280,
+                description: "40 litre Samsung microwave oven with grill function",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung 40 litres Microwave @ 280 usd.jpeg"
+            },
+
+            // ── TELEVISIONS (new additions) ───────────────────
+            {
+                id: 76,
+                name: "LG 75\" 4K Smart TV",
+                brand: "LG",
+                category: "televisions",
+                price: 1350,
+                description: "75 inch LG 4K UHD Smart TV with AI ThinQ and stunning visuals",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/LG 75 Smart TV 4k@ 1350 usd..jpeg"
+            },
+            {
+                id: 77,
+                name: "Samsung 75\" 4K Smart TV",
+                brand: "Samsung",
+                category: "televisions",
+                price: 1300,
+                description: "75 inch Samsung 4K Crystal UHD Smart TV with Tizen OS",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung 75 Smart TV 4K@ 1300 usd..jpeg"
+            },
+            {
+                id: 78,
+                name: "Samsung 65\" Smart TV",
+                brand: "Samsung",
+                category: "televisions",
+                price: 1100,
+                description: "65 inch Samsung UHD Smart TV with immersive viewing experience",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung 65 Smart TV @  1100 usd.jpeg"
+            },
+            {
+                id: 79,
+                name: "Skyworth 75\" Smart TV",
+                brand: "Skyworth",
+                category: "televisions",
+                price: 1100,
+                description: "75 inch Skyworth 4K Smart TV with Android OS and HDR support",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Skyworth 75 Smart TV @ 1100 usd..jpeg"
+            },
+            {
+                id: 80,
+                name: "Hisense 75\" Smart TV",
+                brand: "Hisense",
+                category: "televisions",
+                price: 1200,
+                description: "75 inch Hisense 4K ULED Smart TV with Dolby Vision and Atmos",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 75 Smart TV @ 1200 usd..jpeg"
+            },
+
+            // ── STOVES & COOKTOPS (new category) ─────────────
+            {
+                id: 81,
+                name: "Univa 4-Plate Energy Rated Stove",
+                brand: "Univa",
+                category: "stoves",
+                price: 330,
+                description: "Energy efficient 4-plate electric stove with solid cast plates",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Univa energy Rated 4 plate @ 330 usd.jpeg"
+            },
+            {
+                id: 82,
+                name: "Defy 50cm 3-Plate Stove",
+                brand: "Defy",
+                category: "stoves",
+                price: 385,
+                description: "50cm Defy 3-plate electric stove with undercounter oven",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 50cm. 3 plate stove @ 385 usd..jpeg"
+            },
+            {
+                id: 83,
+                name: "Totai 4-Burner Gas Stove",
+                brand: "Totai",
+                category: "stoves",
+                price: 385,
+                description: "4-burner freestanding gas stove with oven and grill",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Totai- 4 Burner Gas Stove @ 385 usd.jpeg"
+            },
+            {
+                id: 84,
+                name: "Good Mama 2-Plate Spiral Stove",
+                brand: "Good Mama",
+                category: "stoves",
+                price: 30,
+                description: "Compact 2-plate spiral electric stove ideal for small spaces",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/2 plate Dpiral Good Mama @ 30 usd.jpeg"
+            },
+            {
+                id: 85,
+                name: "Digimark 4-Plate Gas Stove",
+                brand: "Digimark",
+                category: "stoves",
+                price: 165,
+                description: "Free-standing 4-plate gas stove with sturdy cast iron grates",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Digimark Free-Standing 4 plate gas stove @ 165 usd.jpeg"
+            },
+            {
+                id: 86,
+                name: "Bosch Series 2 Gas Hob",
+                brand: "Bosch",
+                category: "stoves",
+                price: 350,
+                description: "Bosch Series 2 built-in gas hob with 4 burners and auto ignition",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Bosch Series 2 Gas Hob @ 350 usd..jpeg"
+            },
+            {
+                id: 87,
+                name: "Univa 500mm 4-Burner Gas Stove",
+                brand: "Univa",
+                category: "stoves",
+                price: 380,
+                description: "500mm freestanding 4-burner gas stove with oven",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Univa 500mm 4 Burner Gas @ 380 usd.jpeg"
+            },
+            {
+                id: 88,
+                name: "Single Electric Plate",
+                brand: "Unbranded",
+                category: "stoves",
+                price: 15,
+                description: "Single burner electric hot plate, perfect for dorms and travel",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Single Plate @ 15 usd.jpeg"
+            },
+            {
+                id: 89,
+                name: "Totai Gas Hob",
+                brand: "Totai",
+                category: "stoves",
+                price: 250,
+                description: "Totai built-in gas hob with multiple burner sizes",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Totai Hob @ 250 usd.jpeg"
+            },
+            {
+                id: 90,
+                name: "5-Burner Natural Gas Stove",
+                brand: "Unbranded",
+                category: "stoves",
+                price: 160,
+                description: "5-burner natural gas stove with large capacity and oven",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/5 Burner Natural Gas @ 160 usd.jpeg"
+            },
+
+            // ── WASHING MACHINES (new category) ──────────────
+            {
+                id: 91,
+                name: "Hisense 18kg Top Loader",
+                brand: "Hisense",
+                category: "washing",
+                price: 700,
+                description: "18kg top load washing machine with multiple wash programs",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Top Loader 18kg @ 700usd..jpeg"
+            },
+            {
+                id: 92,
+                name: "Samsung 21kg AI Top Loader",
+                brand: "Samsung",
+                category: "washing",
+                price: 850,
+                description: "21kg AI-powered top load washing machine with smart sensing",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samsung Top loader 21 Kg AI Washing Machine @ 850 usd.jpeg"
+            },
+            {
+                id: 93,
+                name: "Bennett Read 22kg Top Loader",
+                brand: "Bennett Read",
+                category: "washing",
+                price: 850,
+                description: "22kg top loader washing machine with large capacity drum",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Bennet Read Top loader Washimg Machine 22 kg @ 850 usd..jpeg"
+            },
+            {
+                id: 94,
+                name: "Hisense 11kg Top Loader",
+                brand: "Hisense",
+                category: "washing",
+                price: 550,
+                description: "11kg top load washing machine with multiple washing modes",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 11kg Top Loader @ 550 usd..jpeg"
+            },
+            {
+                id: 95,
+                name: "Defy 7KG Front Loader",
+                brand: "Defy",
+                category: "washing",
+                price: 530,
+                description: "7kg front load washing machine with 15 wash programs",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 7KG Front Loader @ 530 usd.jpeg"
+            },
+            {
+                id: 96,
+                name: "Defy 12KG Front Loader",
+                brand: "Defy",
+                category: "washing",
+                price: 750,
+                description: "12kg front loader with steam care and quick wash function",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 12 KG Front Loader @ 750 usd.jpeg"
+            },
+            {
+                id: 97,
+                name: "Hisense 12KG Smart Front Loader",
+                brand: "Hisense",
+                category: "washing",
+                price: 870,
+                description: "12kg smart front loader with WiFi and AI-powered wash cycles",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 12 KG Smart Front Loader @ 870 usd..jpeg"
+            },
+            {
+                id: 98,
+                name: "Defy 10KG Front Loader",
+                brand: "Defy",
+                category: "washing",
+                price: 700,
+                description: "10kg front load washing machine with drum clean and delay start",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 10 KG Front Loader Washing Machine @ 700 usd..jpeg"
+            },
+            {
+                id: 99,
+                name: "Hisense 10KG Front Loader",
+                brand: "Hisense",
+                category: "washing",
+                price: 750,
+                description: "10kg front loader with inverter motor and energy saving modes",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 10 KG Front Loader Washing Machine at @750.jpeg"
+            },
+            {
+                id: 100,
+                name: "Samsung 11KG Front Loader",
+                brand: "Samsung",
+                category: "washing",
+                price: 800,
+                description: "11kg Samsung front loader with Ecobubble technology",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Samasung 11 KG Fromt Loader Washing Machine @ 800 usd..jpeg"
+            },
+
+            // ── ACCESSORIES (new additions) ───────────────────
+            {
+                id: 101,
+                name: "Volkano Portable Speaker",
+                brand: "Volkano",
+                category: "accessories",
+                price: 35,
+                description: "Compact Volkano portable speaker with wireless connectivity",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Volkano @ 35 usd.jpeg"
+            },
+            {
+                id: 102,
+                name: "Nesty Accessory",
+                brand: "Nesty",
+                category: "accessories",
+                price: 25,
+                description: "Stylish Nesty fashion accessory, a perfect everyday piece",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/25 usd Nesty.jpeg"
+            },
+            {
+                id: 103,
+                name: "Nesty Premium Accessory",
+                brand: "Nesty",
+                category: "accessories",
+                price: 30,
+                description: "Premium Nesty fashion accessory with elegant finish",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/30 usd NESTY.jpeg"
             }
         ];
 
@@ -3126,6 +3657,25 @@
             content.classList.toggle('open');
             btn.classList.toggle('open');
         }
+
+        // =============================================
+        // DEALS POPUP
+        // =============================================
+        function openDealsPopup(e) {
+            if (e) e.preventDefault();
+            document.getElementById('dealsPopup').classList.remove('hidden');
+        }
+
+        function closeDealsPopup() {
+            document.getElementById('dealsPopup').classList.add('hidden');
+        }
+
+        // Auto-open popup on page load (after short delay)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('dealsPopup').classList.remove('hidden');
+            }, 800);
+        });
 
         // =============================================
         // OUR PROMISE PANEL TOGGLE (MOBILE)
