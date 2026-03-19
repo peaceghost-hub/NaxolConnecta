@@ -1580,72 +1580,6 @@
         }
 
         /* =============================================
-           DEALS POPUP
-           ============================================= */
-        .deals-popup-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .deals-popup-overlay.hidden { display: none; }
-        .deals-popup-box {
-            position: relative;
-            border: 2px solid var(--accent-cyan);
-            border-radius: 16px;
-            overflow: hidden;
-            max-width: 480px;
-            width: 100%;
-            animation: fadeInUp 0.4s ease;
-            box-shadow: 0 20px 60px rgba(0,229,255,0.25);
-            line-height: 0;
-        }
-        .deals-popup-close {
-            position: absolute;
-            top: 0.5rem; right: 0.6rem;
-            background: rgba(0,0,0,0.65);
-            border: none;
-            color: #fff;
-            font-size: 1.6rem;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            line-height: 1;
-            z-index: 2;
-            transition: background 0.2s;
-        }
-        .deals-popup-close:hover { background: rgba(0,0,0,0.9); }
-        .deals-popup-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 0;
-        }
-        .deals-popup-title {
-            position: absolute;
-            bottom: 1rem; left: 0; right: 0;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 1.05rem;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.6);
-            text-align: center;
-            line-height: 1.3;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* =============================================
            DEALS SECTION
            ============================================= */
         .deals-section { margin: 3rem 0; }
@@ -1670,9 +1604,6 @@
             font-size: 0.85rem;
             padding: 0.5rem 1.6rem;
         }
-        @media (max-width: 768px) {
-            .deals-popup-title { font-size: 1.1rem; }
-        }
     </style>
 </head>
 <body>
@@ -1684,7 +1615,7 @@
         <ul class="nav-links">
             <li><a href="#hero">Home</a></li>
             <li><a href="#products">Products</a></li>
-            <li><a href="#" onclick="openDealsPopup(event)">Deals</a></li>
+            <li><a href="#deals" onclick="event.preventDefault(); smoothScroll('#deals')">Deals</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="nav-promise-item"><a href="#" onclick="togglePromisePanel(event)">Promise</a></li>
         </ul>
@@ -1825,7 +1756,7 @@
         <section class="deals-section" id="deals">
             <h2 class="section-title">🔥 Customised Deals</h2>
             <div class="deals-promo-card">
-                <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Customised Deals" onclick="openDealsPopup(event)">
+                <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Customised Deals">
             </div>
             <button class="btn btn-primary deals-inquire-btn" onclick="inquireAboutDeals()">📩 Inquire</button>
         </section>
@@ -1972,17 +1903,6 @@
         <img id="lightboxImage" src="" alt="Product Image">
         <div class="lightbox-caption" id="lightboxCaption"></div>
         <div class="lightbox-price" id="lightboxPrice"></div>
-    </div>
-
-    <!-- =============================================
-         DEALS POPUP (auto-opens on page load)
-         ============================================= -->
-    <div class="deals-popup-overlay hidden" id="dealsPopup">
-        <div class="deals-popup-box">
-            <button class="deals-popup-close" onclick="closeDealsPopup()" aria-label="Close">&times;</button>
-            <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Deals" class="deals-popup-img">
-            <span class="deals-popup-title">🔥 Check out Customised Deals!</span>
-        </div>
     </div>
 
     <script>
@@ -3692,39 +3612,12 @@
             btn.classList.toggle('open');
         }
 
-        // =============================================
-        // DEALS POPUP
-        // =============================================
-        function openDealsPopup(e) {
-            if (e) e.preventDefault();
-            document.getElementById('dealsPopup').classList.remove('hidden');
-            history.pushState({ overlay: 'deals' }, '');
-        }
-
-        function closeDealsPopup() {
-            const el = document.getElementById('dealsPopup');
-            if (el.classList.contains('hidden')) return;
-            el.classList.add('hidden');
-            if (history.state && history.state.overlay === 'deals') history.back();
-        }
-
-        // Auto-open popup on page load (after short delay)
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('dealsPopup').classList.remove('hidden');
-                history.pushState({ overlay: 'deals' }, '');
-            }, 800);
-        });
-
-        // Back button closes overlays instead of navigating away
+        // Back button closes lightbox
         window.addEventListener('popstate', (e) => {
             const lightbox = document.getElementById('lightbox');
-            const dealsPopup = document.getElementById('dealsPopup');
             if (lightbox.classList.contains('active')) {
                 lightbox.classList.remove('active');
                 document.body.style.overflow = '';
-            } else if (!dealsPopup.classList.contains('hidden')) {
-                dealsPopup.classList.add('hidden');
             }
         });
 
