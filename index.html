@@ -968,6 +968,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
 
         .product-card:hover {
@@ -1091,7 +1092,7 @@
         }
 
         @media (max-width: 768px) {
-            .products-grid {
+            .products-grid:not(.mobile-category-layout) {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 1rem;
             }
@@ -1110,6 +1111,52 @@
 
             .product-price {
                 font-size: 1.5rem;
+            }
+
+            .products-grid.mobile-category-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 1.75rem;
+            }
+
+            .product-category-row {
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .product-category-header {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 0.75rem;
+            }
+
+            .product-category-title {
+                margin: 0;
+                font-size: 1rem;
+            }
+
+            .product-category-count {
+                color: var(--text-secondary);
+                font-size: 0.75rem;
+                white-space: nowrap;
+            }
+
+            .product-row-track {
+                display: grid;
+                grid-auto-flow: column;
+                grid-auto-columns: minmax(160px, calc(50% - 0.5rem));
+                gap: 0.8rem;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                padding: 0 0.35rem 0.35rem 0;
+                scroll-snap-type: x proximity;
+                scrollbar-width: thin;
+            }
+
+            .product-row-track .product-card {
+                scroll-snap-align: start;
             }
         }
 
@@ -1604,6 +1651,46 @@
             font-size: 0.85rem;
             padding: 0.5rem 1.6rem;
         }
+        .deals-copy {
+            max-width: 620px;
+            margin: 1rem auto 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .deals-contact-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+        .product-empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .product-row-track {
+                grid-auto-columns: minmax(145px, calc(50% - 0.45rem));
+            }
+
+            .product-category-title {
+                font-size: 0.9rem;
+            }
+
+            .product-category-count {
+                font-size: 0.68rem;
+            }
+
+            .deals-contact-links {
+                gap: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1655,53 +1742,11 @@
             </a>
             <button class="brand-toggle-btn" onclick="toggleBrandStrip()">🏷️ Brands</button>
         </div>
-        <div class="brand-strip" id="brandStrip">
-            <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
-            <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
-            <span class="brand-pill" data-brand="Hisense" onclick="filterByBrand('Hisense', this)">HISENSE</span>
-            <span class="brand-pill" data-brand="Skyworth" onclick="filterByBrand('Skyworth', this)">SKYWORTH</span>
-            <span class="brand-pill" data-brand="LG" onclick="filterByBrand('LG', this)">LG</span>
-            <span class="brand-pill" data-brand="Kenwood" onclick="filterByBrand('Kenwood', this)">KENWOOD</span>
-            <span class="brand-pill" data-brand="Russell Hobbs" onclick="filterByBrand('Russell Hobbs', this)">RUSSELL HOBBS</span>
-            <span class="brand-pill" data-brand="Defy" onclick="filterByBrand('Defy', this)">DEFY</span>
-            <span class="brand-pill" data-brand="JBL" onclick="filterByBrand('JBL', this)">JBL</span>
-            <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
-            <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
-            <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
-            <span class="brand-pill" data-brand="Univa" onclick="filterByBrand('Univa', this)">UNIVA</span>
-            <span class="brand-pill" data-brand="Totai" onclick="filterByBrand('Totai', this)">TOTAI</span>
-            <span class="brand-pill" data-brand="Bosch" onclick="filterByBrand('Bosch', this)">BOSCH</span>
-            <span class="brand-pill" data-brand="Digimark" onclick="filterByBrand('Digimark', this)">DIGIMARK</span>
-            <span class="brand-pill" data-brand="Good Mama" onclick="filterByBrand('Good Mama', this)">GOOD MAMA</span>
-            <span class="brand-pill" data-brand="Harman Kardon" onclick="filterByBrand('Harman Kardon', this)">HARMAN KARDON</span>
-            <span class="brand-pill" data-brand="Sound Select" onclick="filterByBrand('Sound Select', this)">SOUND SELECT</span>
-            <span class="brand-pill" data-brand="Nesty" onclick="filterByBrand('Nesty', this)">NESTY</span>
-        </div>
+        <div class="brand-strip" id="brandStrip"></div>
     </section>
 
     <!-- Mobile brand panel (toggled by Brands button) -->
-    <div class="mobile-brand-panel" id="mobileBrandPanel">
-        <span class="brand-pill" data-brand="Sony" onclick="filterByBrand('Sony', this)">SONY</span>
-        <span class="brand-pill" data-brand="Samsung" onclick="filterByBrand('Samsung', this)">SAMSUNG</span>
-        <span class="brand-pill" data-brand="Hisense" onclick="filterByBrand('Hisense', this)">HISENSE</span>
-        <span class="brand-pill" data-brand="Skyworth" onclick="filterByBrand('Skyworth', this)">SKYWORTH</span>
-        <span class="brand-pill" data-brand="LG" onclick="filterByBrand('LG', this)">LG</span>
-        <span class="brand-pill" data-brand="Kenwood" onclick="filterByBrand('Kenwood', this)">KENWOOD</span>
-        <span class="brand-pill" data-brand="Russell Hobbs" onclick="filterByBrand('Russell Hobbs', this)">RUSSELL HOBBS</span>
-        <span class="brand-pill" data-brand="Defy" onclick="filterByBrand('Defy', this)">DEFY</span>
-        <span class="brand-pill" data-brand="JBL" onclick="filterByBrand('JBL', this)">JBL</span>
-        <span class="brand-pill" data-brand="Huawei" onclick="filterByBrand('Huawei', this)">HUAWEI</span>
-        <span class="brand-pill" data-brand="Volkano" onclick="filterByBrand('Volkano', this)">VOLKANO</span>
-        <span class="brand-pill" data-brand="Bennett Read" onclick="filterByBrand('Bennett Read', this)">BENNETT READ</span>
-        <span class="brand-pill" data-brand="Univa" onclick="filterByBrand('Univa', this)">UNIVA</span>
-        <span class="brand-pill" data-brand="Totai" onclick="filterByBrand('Totai', this)">TOTAI</span>
-        <span class="brand-pill" data-brand="Bosch" onclick="filterByBrand('Bosch', this)">BOSCH</span>
-        <span class="brand-pill" data-brand="Digimark" onclick="filterByBrand('Digimark', this)">DIGIMARK</span>
-        <span class="brand-pill" data-brand="Good Mama" onclick="filterByBrand('Good Mama', this)">GOOD MAMA</span>
-        <span class="brand-pill" data-brand="Harman Kardon" onclick="filterByBrand('Harman Kardon', this)">HARMAN KARDON</span>
-        <span class="brand-pill" data-brand="Sound Select" onclick="filterByBrand('Sound Select', this)">SOUND SELECT</span>
-        <span class="brand-pill" data-brand="Nesty" onclick="filterByBrand('Nesty', this)">NESTY</span>
-    </div>
+    <div class="mobile-brand-panel" id="mobileBrandPanel"></div>
 
     <!-- =============================================
          CATEGORY FILTER
@@ -1713,20 +1758,7 @@
                 📊 Categories <span class="toggle-arrow">▼</span>
             </button>
             <div class="filter-content" id="categoryContent">
-                <div class="category-filter">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="televisions">📺 Televisions</button>
-                    <button class="filter-btn" data-filter="bundle">📦 Bundle Deals</button>
-                    <button class="filter-btn" data-filter="audio">🔊 Sound Bars & Audio</button>
-                    <button class="filter-btn" data-filter="airfryer">🌀 Air Fryers</button>
-                    <button class="filter-btn" data-filter="microwave">🍽️ Microwaves & Kitchen</button>
-                    <button class="filter-btn" data-filter="kettle">☕ Electric Kettles</button>
-                    <button class="filter-btn" data-filter="iron">🧺 Irons</button>
-                    <button class="filter-btn" data-filter="watch">⌚ Smart Watches</button>
-                    <button class="filter-btn" data-filter="accessories">💍 Accessories & Jewellery</button>
-                    <button class="filter-btn" data-filter="stoves">🍳 Stoves & Cooktops</button>
-                    <button class="filter-btn" data-filter="washing">🫧 Washing Machines</button>
-                </div>
+                <div class="category-filter" id="categoryFilter"></div>
             </div>
         </div>
 
@@ -1758,7 +1790,11 @@
             <div class="deals-promo-card">
                 <img src="website images/Naxol Connecta.jpeg" alt="Naxol Connecta Customised Deals">
             </div>
-            <button class="btn btn-primary deals-inquire-btn" onclick="inquireAboutDeals()">📩 Inquire</button>
+            <p class="deals-copy">We accept Laybyes, just get in touch.</p>
+            <div class="deals-contact-links">
+                <a href="#" class="btn btn-success deals-inquire-btn" id="dealsWhatsApp">💬 WhatsApp Us</a>
+                <a href="mailto:3mashingerangarirait3@gmail.com?subject=Naxol%20Connecta%20Deals%20Inquiry" class="btn btn-primary deals-inquire-btn">✉️ Email Us</a>
+            </div>
         </section>
 
         <!-- =============================================
@@ -1916,6 +1952,27 @@
         const GLOBAL_WHATSAPP = "+27623667462";
         const GLOBAL_EMAIL = "3mashingerangarirait3@gmail.com";
         const CALL_NUMBER = "+263778812350";
+        const MOBILE_BREAKPOINT = 768;
+        const CATEGORY_CONFIG = [
+            { id: "televisions", label: "Televisions", filterLabel: "📺 Televisions" },
+            { id: "bundle", label: "Bundle Deals", filterLabel: "📦 Bundle Deals" },
+            { id: "fridges", label: "Fridges", filterLabel: "🧊 Fridges" },
+            { id: "freezers", label: "Freezers", filterLabel: "❄️ Freezers" },
+            { id: "audio", label: "Sound Bars & Audio", filterLabel: "🔊 Sound Bars & Audio" },
+            { id: "airfryer", label: "Air Fryers", filterLabel: "🌀 Air Fryers" },
+            { id: "microwave", label: "Microwaves & Kitchen", filterLabel: "🍽️ Microwaves & Kitchen" },
+            { id: "kettle", label: "Electric Kettles", filterLabel: "☕ Electric Kettles" },
+            { id: "iron", label: "Irons", filterLabel: "🧺 Irons" },
+            { id: "watch", label: "Smart Watches", filterLabel: "⌚ Smart Watches" },
+            { id: "accessories", label: "Accessories & Jewellery", filterLabel: "💍 Accessories & Jewellery" },
+            { id: "stoves", label: "Stoves & Cooktops", filterLabel: "🍳 Stoves & Cooktops" },
+            { id: "washing", label: "Washing Machines", filterLabel: "🫧 Washing Machines" },
+            { id: "furniture", label: "Furniture & Bar Units", filterLabel: "🪑 Furniture & Bar Units" }
+        ];
+        const CATEGORY_MAP = CATEGORY_CONFIG.reduce((map, category) => {
+            map[category.id] = category;
+            return map;
+        }, {});
 
         // =============================================
         // PRODUCT DATABASE
@@ -3085,6 +3142,243 @@
                 whatsapp: GLOBAL_WHATSAPP,
                 email: GLOBAL_EMAIL,
                 image: "website images/30 usd NESTY.jpeg"
+            },
+
+            // ── FRIDGES ───────────────────────────────
+            {
+                id: 104,
+                name: "Bennett Read Fridge 206L",
+                brand: "Bennett Read",
+                category: "fridges",
+                price: 580,
+                description: "206L fridge with generous fresh food storage for everyday family use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Bennet Read 206 L@ 580 usd.jpeg"
+            },
+            {
+                id: 105,
+                name: "Hisense Fridge 223L",
+                brand: "Hisense",
+                category: "fridges",
+                price: 460,
+                description: "223L Hisense fridge with practical shelving and everyday cooling performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 223 L  @ 460 usd.jpeg"
+            },
+            {
+                id: 106,
+                name: "Hisense Fridge 154L",
+                brand: "Hisense",
+                category: "fridges",
+                price: 360,
+                description: "Compact 154L Hisense fridge ideal for apartments, offices, or smaller kitchens",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense154 L @ 360 usd.jpeg"
+            },
+            {
+                id: 107,
+                name: "Defy Fridge 210L",
+                brand: "Defy",
+                category: "fridges",
+                price: 400,
+                description: "210L Defy fridge with a neat footprint and reliable day-to-day cooling",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 210 L @ 400 usd.jpeg"
+            },
+            {
+                id: 108,
+                name: "Hisense Double Door Fridge 394L",
+                brand: "Hisense",
+                category: "fridges",
+                price: 1050,
+                description: "Spacious 394L double door fridge for larger households and bulk shopping",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense Double door394 L @ 1050 usd..jpeg"
+            },
+            {
+                id: 109,
+                name: "Defy Fridge 254L",
+                brand: "Defy",
+                category: "fridges",
+                price: 500,
+                description: "254L Defy fridge with roomy compartments and dependable temperature control",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 254 L @ 500 usd.jpeg"
+            },
+            {
+                id: 110,
+                name: "Hisense Bar Fridge 95L",
+                brand: "Hisense",
+                category: "fridges",
+                price: 270,
+                description: "95L Hisense bar fridge that fits neatly into bedrooms, offices, or small spaces",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 95 L @ 270 usd.jpeg"
+            },
+            {
+                id: 111,
+                name: "Univa Fridge 86L",
+                brand: "Univa",
+                category: "fridges",
+                price: 300,
+                description: "86L Univa compact fridge designed for convenience where space is limited",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Univa 86 L@ 300 usd.jpeg"
+            },
+            {
+                id: 112,
+                name: "KIC Fridge 239L",
+                brand: "KIC",
+                category: "fridges",
+                price: 400,
+                description: "239L KIC fridge with practical internal storage for home use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/KIC 239 L @ 400 usd.jpeg"
+            },
+            {
+                id: 113,
+                name: "KIC Fridge 170L",
+                brand: "KIC",
+                category: "fridges",
+                price: 370,
+                description: "170L KIC fridge offering solid capacity in a compact design",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/KIC 170 L @ 370 usd.jpeg"
+            },
+            {
+                id: 114,
+                name: "Fridge Star Fridge 195L",
+                brand: "Fridge Star",
+                category: "fridges",
+                price: 350,
+                description: "195L fridge with efficient storage and a clean, simple finish",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Fridge Star  195 L @ 350 usd.jpeg"
+            },
+            {
+                id: 115,
+                name: "Midea Bar Fridge 93L",
+                brand: "Midea",
+                category: "fridges",
+                price: 270,
+                description: "93L Midea bar fridge for beverages, snacks, and compact-room convenience",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Midea 93 L @  270 usd.jpeg"
+            },
+            {
+                id: 116,
+                name: "Defy Fridge 146L",
+                brand: "Defy",
+                category: "fridges",
+                price: 290,
+                description: "146L Defy fridge sized for smaller households and secondary storage needs",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 146 L @ 290 usd.jpeg"
+            },
+            {
+                id: 117,
+                name: "Defy Fridge 386L Premium",
+                brand: "Defy",
+                category: "fridges",
+                price: 650,
+                description: "Premium 386L Defy fridge with plenty of room for family groceries",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 386 L @ 650 usd.jpeg"
+            },
+            {
+                id: 118,
+                name: "Defy Fridge 386L",
+                brand: "Defy",
+                category: "fridges",
+                price: 500,
+                description: "Value-priced 386L Defy fridge with large storage capacity",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 386 L @ 500 usd..jpeg"
+            },
+            {
+                id: 119,
+                name: "Defy Fridge 146L (Open View)",
+                brand: "Defy",
+                category: "fridges",
+                price: 290,
+                description: "Open-view image of the 146L Defy fridge to show the interior layout",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Defy 146 L @ 290 usd opened.jpeg"
+            },
+            {
+                id: 120,
+                name: "Midea Bar Fridge 93L (Open View)",
+                brand: "Midea",
+                category: "fridges",
+                price: 270,
+                description: "Open-view image of the 93L Midea bar fridge showing the inside storage",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Midea 93 L @  270 usd opened.jpeg"
+            },
+            {
+                id: 121,
+                name: "Hisense Fridge 223L (Open View)",
+                brand: "Hisense",
+                category: "fridges",
+                price: 460,
+                description: "Open-view image of the 223L Hisense fridge to highlight the shelving layout",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense 223 L  @ 460 usd opened.jpeg"
+            },
+
+            // ── FREEZERS ──────────────────────────────
+            {
+                id: 122,
+                name: "Hisense Chest Freezer 95L",
+                brand: "Hisense",
+                category: "freezers",
+                price: 330,
+                description: "95L chest freezer for extra frozen-food capacity at home or in-store",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Hisense chest Freezer 95 L @ 330 usd..jpeg"
+            },
+            {
+                id: 123,
+                name: "KIC Freezer",
+                brand: "KIC",
+                category: "freezers",
+                price: 485,
+                description: "KIC freezer built for reliable frozen storage and everyday convenience",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/KIC Freezer @ 485 usd.jpeg"
+            },
+
+            // ── FURNITURE & BAR UNITS ─────────────────
+            {
+                id: 124,
+                name: "Fusion Steel Bar Unit",
+                brand: "Fusion",
+                category: "furniture",
+                price: 280,
+                description: "Steel bar unit with a clean modern finish for home entertainment spaces",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Fusion Steel Bar @ 280 usd.jpeg"
             }
         ];
 
@@ -3099,11 +3393,11 @@
         // DOM INITIALIZATION
         // =============================================
         document.addEventListener('DOMContentLoaded', function() {
-            renderProducts();
             setupFilterButtons();
             setupBrandFilter();
             setupWhatsAppLinks();
             setupEventListeners();
+            renderProducts();
             initHeroSlideshow();
         });
 
@@ -3112,8 +3406,9 @@
         // =============================================
         function initHeroSlideshow() {
             const container = document.getElementById('heroSlideshow');
+            container.innerHTML = '';
             const heroImages = products
-                .filter(p => ['televisions','bundle','audio','airfryer','microwave','watch'].includes(p.category))
+                .filter(p => ['televisions', 'bundle', 'audio', 'airfryer', 'microwave', 'watch', 'fridges', 'freezers'].includes(p.category))
                 .map(p => p.image);
             
             // Shuffle and get enough images to fill the grid (24 tiles for 6x4 grid)
@@ -3221,6 +3516,7 @@
             const isSelected = selectedProducts.has(product.id);
             const selectedBadge = isSelected ? `<div class="selected-badge">✔</div>` : '';
             const promoBadge = product.promo ? '<div class="promo-badge">PROMO</div>' : '';
+            const categoryLabel = getCategoryMeta(product.category).label;
 
             card.innerHTML = `
                 <div class="product-image">
@@ -3230,7 +3526,7 @@
                     ${selectedBadge}
                 </div>
                 <div class="product-info">
-                    <span class="category-tag">${product.category.toUpperCase()}</span>
+                    <span class="category-tag">${categoryLabel}</span>
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-description">${product.description}</p>
                     <div class="product-price">$${product.price}</div>
@@ -3348,66 +3644,115 @@
         // =============================================
         // CATEGORY FILTER
         // =============================================
+        function getCategoryMeta(categoryId) {
+            return CATEGORY_MAP[categoryId] || {
+                id: categoryId,
+                label: categoryId.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()),
+                filterLabel: categoryId
+            };
+        }
+
         function setupFilterButtons() {
-            document.querySelectorAll('.filter-btn:not(.brand-filter-btn)').forEach(btn => {
+            const categoryContainer = document.getElementById('categoryFilter');
+            categoryContainer.innerHTML = '';
+
+            [{ id: 'all', filterLabel: 'All' }, ...CATEGORY_CONFIG].forEach(category => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.dataset.filter = category.id;
+                btn.textContent = category.filterLabel;
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.filter-btn:not(.brand-filter-btn)').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
                     currentFilter = this.dataset.filter;
+                    syncCategoryUI();
                     renderProducts();
                 });
+                categoryContainer.appendChild(btn);
             });
+
+            syncCategoryUI();
         }
 
         // =============================================
         // BRAND FILTER
         // =============================================
         function setupBrandFilter() {
-            // Build unique brand buttons dynamically
             const brandContainer = document.getElementById('brandFilter');
-            const brands = [...new Set(products.map(p => p.brand))].sort();
+            const brands = getAllBrands();
+
+            brandContainer.innerHTML = '';
+
+            const allBrandsBtn = document.createElement('button');
+            allBrandsBtn.className = 'filter-btn brand-filter-btn';
+            allBrandsBtn.dataset.brand = 'all';
+            allBrandsBtn.textContent = 'All Brands';
+            allBrandsBtn.addEventListener('click', function() {
+                currentBrand = 'all';
+                syncBrandUI();
+                renderProducts();
+            });
+            brandContainer.appendChild(allBrandsBtn);
+
             brands.forEach(brand => {
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn brand-filter-btn';
                 btn.dataset.brand = brand;
                 btn.textContent = brand;
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.brand-filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
                     currentBrand = this.dataset.brand;
-                    // Also reset hero brand pill highlights
-                    document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
-                    const heroPill = document.querySelector(`.brand-pill[data-brand="${brand}"]`);
-                    if (heroPill) heroPill.classList.add('active');
+                    syncBrandUI();
                     renderProducts();
                 });
                 brandContainer.appendChild(btn);
             });
 
-            // "All Brands" button already in HTML
-            document.querySelector('.brand-filter-btn[data-brand="all"]').addEventListener('click', function() {
-                document.querySelectorAll('.brand-filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                currentBrand = 'all';
-                document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
-                renderProducts();
+            setupBrandPills();
+            syncBrandUI();
+        }
+
+        function getAllBrands() {
+            return [...new Set(products.map(product => product.brand))].sort((a, b) => a.localeCompare(b));
+        }
+
+        function getFeaturedBrands() {
+            return getAllBrands().filter(brand => !['Generic', 'Unbranded'].includes(brand));
+        }
+
+        function setupBrandPills() {
+            const brandMarkup = getFeaturedBrands().map(brand =>
+                `<span class="brand-pill" data-brand="${brand}">${brand.toUpperCase()}</span>`
+            ).join('');
+
+            ['brandStrip', 'mobileBrandPanel'].forEach(containerId => {
+                const container = document.getElementById(containerId);
+                container.innerHTML = brandMarkup;
+                container.querySelectorAll('.brand-pill').forEach(pill => {
+                    pill.addEventListener('click', function() {
+                        filterByBrand(this.dataset.brand);
+                    });
+                });
+            });
+        }
+
+        function syncCategoryUI() {
+            document.querySelectorAll('#categoryFilter .filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === currentFilter);
+            });
+        }
+
+        function syncBrandUI() {
+            document.querySelectorAll('.brand-filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.brand === currentBrand);
+            });
+
+            document.querySelectorAll('.brand-pill').forEach(pill => {
+                pill.classList.toggle('active', currentBrand !== 'all' && pill.dataset.brand === currentBrand);
             });
         }
 
         // Called when hero brand pills are clicked
-        function filterByBrand(brand, el) {
+        function filterByBrand(brand) {
             currentBrand = brand;
-            currentFilter = 'all';
-            // Reset category filter UI
-            document.querySelectorAll('.filter-btn:not(.brand-filter-btn)').forEach(b => b.classList.remove('active'));
-            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
-            // Update brand filter bar UI
-            document.querySelectorAll('.brand-filter-btn').forEach(b => b.classList.remove('active'));
-            const brandBtn = document.querySelector(`.brand-filter-btn[data-brand="${brand}"]`);
-            if (brandBtn) brandBtn.classList.add('active');
-            // Update hero pill highlights
-            document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
-            el.classList.add('active');
+            syncBrandUI();
             renderProducts();
             smoothScroll('#products');
         }
@@ -3591,6 +3936,7 @@
             document.getElementById('heroWhatsApp').href = whatsappLink;
             document.getElementById('contactWhatsApp').href = whatsappLink;
             document.getElementById('footerWhatsApp').href = whatsappLink;
+            document.getElementById('dealsWhatsApp').href = whatsappLink;
         }
 
         // =============================================
@@ -3680,15 +4026,9 @@
             }
         }
 
-        // Patch renderProducts to incorporate search
-        const _originalRenderProducts = renderProducts;
-        renderProducts = function() {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-
+        function getFilteredProducts() {
             let filtered = products;
 
-            // Search filter
             if (searchQuery) {
                 filtered = filtered.filter(p =>
                     p.name.toLowerCase().includes(searchQuery) ||
@@ -3699,25 +4039,76 @@
                 );
             }
 
-            // Category filter
             if (currentFilter !== 'all') {
                 filtered = filtered.filter(p => p.category === currentFilter);
             }
 
-            // Brand filter
             if (currentBrand !== 'all') {
                 filtered = filtered.filter(p => p.brand === currentBrand);
             }
 
+            return filtered;
+        }
+
+        function renderDesktopProducts(grid, filteredProducts) {
+            grid.classList.remove('mobile-category-layout');
+            grid.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                grid.appendChild(createProductCard(product));
+            });
+        }
+
+        function renderMobileProducts(grid, filteredProducts) {
+            grid.classList.add('mobile-category-layout');
+            grid.innerHTML = '';
+
+            const groupedProducts = CATEGORY_CONFIG
+                .map(category => ({
+                    ...category,
+                    items: filteredProducts.filter(product => product.category === category.id)
+                }))
+                .filter(category => category.items.length > 0);
+
+            groupedProducts.forEach(category => {
+                const categoryRow = document.createElement('section');
+                categoryRow.className = 'product-category-row';
+
+                const header = document.createElement('div');
+                header.className = 'product-category-header';
+                header.innerHTML = `
+                    <h3 class="product-category-title">${category.label}</h3>
+                    <span class="product-category-count">${category.items.length} item(s)</span>
+                `;
+
+                const track = document.createElement('div');
+                track.className = 'product-row-track';
+
+                category.items.forEach(product => {
+                    track.appendChild(createProductCard(product));
+                });
+
+                categoryRow.appendChild(header);
+                categoryRow.appendChild(track);
+                grid.appendChild(categoryRow);
+            });
+        }
+
+        renderProducts = function() {
+            const grid = document.getElementById('productsGrid');
+            const filtered = getFilteredProducts();
+
             if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-secondary);font-size:1.1rem;">No products found matching your search.</div>';
+                grid.classList.remove('mobile-category-layout');
+                grid.innerHTML = '<div class="product-empty-state">No products found matching your search.</div>';
                 return;
             }
 
-            filtered.forEach(product => {
-                const card = createProductCard(product);
-                grid.appendChild(card);
-            });
+            if (window.innerWidth <= MOBILE_BREAKPOINT) {
+                renderMobileProducts(grid, filtered);
+            } else {
+                renderDesktopProducts(grid, filtered);
+            }
         };
 
         function setupEventListeners() {
@@ -3739,6 +4130,15 @@
                     searchQuery = '';
                     renderProducts();
                     this.blur();
+                }
+            });
+
+            let previousIsMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+            window.addEventListener('resize', function() {
+                const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+                if (isMobile !== previousIsMobile) {
+                    previousIsMobile = isMobile;
+                    renderProducts();
                 }
             });
         }
