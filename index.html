@@ -580,6 +580,64 @@
             margin: 0.25rem;
         }
 
+        @media (max-width: 768px) {
+            .mobile-brand-panel {
+                padding: 1rem;
+                text-align: left;
+                max-height: 52vh;
+                overflow-y: auto;
+            }
+
+            .mobile-brand-panel.active {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.65rem;
+                align-items: stretch;
+            }
+
+            .mobile-brand-panel.active::before {
+                content: 'Browse brands';
+                grid-column: 1 / -1;
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.85rem;
+                font-weight: 700;
+                color: var(--accent-cyan);
+                letter-spacing: 0.03em;
+                text-transform: uppercase;
+            }
+
+            .mobile-brand-panel .brand-pill {
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                min-height: 54px;
+                padding: 0.75rem 0.9rem;
+                font-size: 0.78rem;
+                line-height: 1.2;
+                text-align: center;
+                white-space: normal;
+            }
+
+            .mobile-brand-panel .brand-pill:hover,
+            .mobile-brand-panel .brand-pill.active {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-brand-panel.active {
+                gap: 0.5rem;
+            }
+
+            .mobile-brand-panel .brand-pill {
+                min-height: 50px;
+                padding: 0.65rem 0.75rem;
+                font-size: 0.72rem;
+            }
+        }
+
         /* ── BOLD WHITE TEXT WITH FAINT GREEN BACKGROUNDS ── */
         .hero-title {
             display: inline-block;
@@ -1832,7 +1890,7 @@
         <section class="contact-section" id="contact">
             <h2>Get In Touch With Us</h2>
             <div class="contact-info">
-                <p><strong>📞 Call:</strong> <a href="tel:+263778812350" class="contact-link">+263 778812350</a></p>
+                <p><strong>📞 Call:</strong> <a href="tel:+263778812350" class="contact-link">Call Mkoma Ranga.T</a></p>
             </div>
             <div class="contact-buttons">
                 <a href="#" class="btn btn-success btn-large" id="contactWhatsApp">
@@ -1921,7 +1979,7 @@
             <div class="footer-logo">NAXOL CONNECTA</div>
             <p class="footer-tagline">Connecting People to Quality Goods & Great Experiences. Bridging Excellence and Accessibility.</p>
             <div class="footer-contact">
-                <a href="tel:+263778812350">📞 +263 778812350</a>
+                <a href="tel:+263778812350">📞 Call Mkoma Ranga.T</a>
                 <a href="#" id="footerWhatsApp">💬 +27623667462</a>
                 <a href="mailto:3mashingerangarirait3@gmail.com">✉️ Email Us</a>
             </div>
