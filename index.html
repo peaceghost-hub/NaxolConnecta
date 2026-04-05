@@ -2018,6 +2018,7 @@
             { id: "freezers", label: "Freezers", filterLabel: "❄️ Freezers" },
             { id: "audio", label: "Sound Bars & Audio", filterLabel: "🔊 Sound Bars & Audio" },
             { id: "airfryer", label: "Air Fryers", filterLabel: "🌀 Air Fryers" },
+            { id: "blenders", label: "Blenders", filterLabel: "🥤 Blenders" },
             { id: "microwave", label: "Microwaves & Kitchen", filterLabel: "🍽️ Microwaves & Kitchen" },
             { id: "kettle", label: "Electric Kettles", filterLabel: "☕ Electric Kettles" },
             { id: "iron", label: "Irons", filterLabel: "🧺 Irons" },
@@ -3437,6 +3438,107 @@
                 whatsapp: GLOBAL_WHATSAPP,
                 email: GLOBAL_EMAIL,
                 image: "website images/Fusion Steel Bar @ 280 usd.jpeg"
+            },
+
+            // ── BLENDERS ──────────────────────────────
+            {
+                id: 125,
+                name: "Unbranded Blender",
+                brand: "Unbranded",
+                category: "blenders",
+                price: 50,
+                description: "Affordable everyday blender for smoothies, sauces, and quick kitchen prep",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/50 usd unbranded blender .jpeg"
+            },
+            {
+                id: 126,
+                name: "Luma Bella Blender",
+                brand: "Luma Bella",
+                category: "blenders",
+                price: 65,
+                description: "Luma Bella blender designed for easy blending at home",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/65 usd luma bella blender.jpeg"
+            },
+            {
+                id: 127,
+                name: "Luma Bella Blender (Alt View)",
+                brand: "Luma Bella",
+                category: "blenders",
+                price: 65,
+                description: "Alternate view of the Luma Bella blender for a closer look at the finish",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Luma Bella 65 us blender.jpeg"
+            },
+            {
+                id: 128,
+                name: "Defy Blender",
+                brand: "Defy",
+                category: "blenders",
+                price: 70,
+                description: "Defy blender built for daily mixing, blending, and meal prep",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/70 usd defy blender.jpeg"
+            },
+            {
+                id: 129,
+                name: "Kenwood Blender",
+                brand: "Kenwood",
+                category: "blenders",
+                price: 70,
+                description: "Kenwood blender with a versatile jug for kitchen blending tasks",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Kenwood 70 usd blender.jpeg"
+            },
+            {
+                id: 130,
+                name: "Kenwood Blender (Black)",
+                brand: "Kenwood",
+                category: "blenders",
+                price: 70,
+                description: "Black Kenwood blender variant with the same practical everyday performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Kenwood 70 usd blender black.jpeg"
+            },
+            {
+                id: 131,
+                name: "Mellerware Blender",
+                brand: "Mellerware",
+                category: "blenders",
+                price: 55,
+                description: "Mellerware blender for smooth drinks, sauces, and quick food prep",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Mellaware 55 usd blender.jpeg"
+            },
+            {
+                id: 132,
+                name: "Russell Hobbs Blender",
+                brand: "Russell Hobbs",
+                category: "blenders",
+                price: 75,
+                description: "Russell Hobbs blender with a polished design and reliable home performance",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/Russel and Hobbs 75 usd blender.jpeg"
+            },
+            {
+                id: 133,
+                name: "Bennett Read Blender",
+                brand: "Bennett Read",
+                category: "blenders",
+                price: 50,
+                description: "Bennett Read blender for quick blending and everyday kitchen use",
+                whatsapp: GLOBAL_WHATSAPP,
+                email: GLOBAL_EMAIL,
+                image: "website images/benet read 50 us blender.jpeg"
             }
         ];
 
@@ -3466,7 +3568,7 @@
             const container = document.getElementById('heroSlideshow');
             container.innerHTML = '';
             const heroImages = products
-                .filter(p => ['televisions', 'bundle', 'audio', 'airfryer', 'microwave', 'watch', 'fridges', 'freezers'].includes(p.category))
+                .filter(p => ['televisions', 'bundle', 'audio', 'airfryer', 'blenders', 'microwave', 'watch', 'fridges', 'freezers'].includes(p.category))
                 .map(p => p.image);
             
             // Shuffle and get enough images to fill the grid (24 tiles for 6x4 grid)
